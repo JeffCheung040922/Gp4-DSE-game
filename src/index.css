@@ -1,0 +1,188 @@
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;700&family=Space+Grotesk:wght@400;500;700&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --color-dse-blue: #2957c8;
+  --color-dse-blue-light: #4f7ff0;
+  --color-dse-red: #cb4b2f;
+  --color-dse-red-light: #e97a53;
+  --color-dse-gold: #d9962b;
+  --color-bg-primary: #f6f0e5;
+  --color-bg-secondary: #efe4d1;
+  --color-bg-card: rgba(255, 250, 241, 0.84);
+  --color-bg-card-hover: rgba(255, 248, 236, 0.92);
+  --color-text-primary: #1f2937;
+  --color-text-secondary: #6b7280;
+  --color-border: rgba(111, 78, 55, 0.14);
+}
+
+:root {
+  color-scheme: light;
+  font-family: 'Space Grotesk', 'Segoe UI', sans-serif;
+  --page-bg:
+    radial-gradient(circle at top left, rgba(217, 150, 43, 0.18), transparent 30%),
+    radial-gradient(circle at 85% 10%, rgba(41, 87, 200, 0.14), transparent 24%),
+    radial-gradient(circle at 50% 100%, rgba(203, 75, 47, 0.10), transparent 28%),
+    linear-gradient(180deg, #fbf7ef 0%, #f4ecdd 42%, #efe2cc 100%);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html, body, #root {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  font-size: clamp(15px, 0.24vw + 14px, 18px);
+}
+
+body {
+  background: var(--page-bg);
+  color: #1f2937;
+  font-family: 'Space Grotesk', 'Segoe UI', system-ui, -apple-system, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  line-height: 1.5;
+}
+
+@media (max-width: 640px) {
+  html {
+    font-size: 16px;
+  }
+}
+
+/* Raise ultra-small UI text globally for better readability. */
+.text-xs {
+  font-size: 0.84rem;
+  line-height: 1.35;
+}
+
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  background-image:
+    linear-gradient(rgba(123, 92, 59, 0.035) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(123, 92, 59, 0.03) 1px, transparent 1px);
+  background-size: 28px 28px;
+  mask-image: linear-gradient(180deg, rgba(0,0,0,0.35), transparent 92%);
+}
+
+#root {
+  isolation: isolate;
+}
+
+a {
+  color: inherit;
+}
+
+button,
+input,
+textarea,
+select {
+  font: inherit;
+}
+
+::selection {
+  background: rgba(41, 87, 200, 0.18);
+  color: #0f172a;
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+}
+::-webkit-scrollbar-track {
+  background: rgba(111, 78, 55, 0.08);
+}
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, rgba(111, 78, 55, 0.44), rgba(41, 87, 200, 0.45));
+  border-radius: 999px;
+  border: 2px solid transparent;
+  background-clip: padding-box;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(180deg, rgba(111, 78, 55, 0.65), rgba(41, 87, 200, 0.7));
+}
+
+/* ─── RPG Animations ─────────────────────────────────────────────────────── */
+@keyframes float-idle {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-8px); }
+}
+
+@keyframes glow-pulse {
+  0%, 100% { opacity: 0.6; }
+  50% { opacity: 1; }
+}
+
+@keyframes shimmer {
+  0% { background-position: -200% center; }
+  100% { background-position: 200% center; }
+}
+
+@keyframes star-twinkle {
+  0%, 100% { opacity: 0.2; }
+  50% { opacity: 0.8; }
+}
+
+.animate-float { animation: float-idle 3s ease-in-out infinite; }
+.animate-glow-pulse { animation: glow-pulse 2s ease-in-out infinite; }
+.animate-shimmer {
+  background: linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.08) 50%, transparent 100%);
+  background-size: 200% auto;
+  animation: shimmer 2.5s linear infinite;
+}
+
+.font-mono-ui {
+  font-family: 'IBM Plex Mono', monospace;
+}
+
+/* ─── Reveal / Entrance Animations ─────────────────────────────────────────── */
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(18px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeInLeft {
+  from { opacity: 0; transform: translateX(-20px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes scaleIn {
+  from { opacity: 0; transform: scale(0.95); }
+  to   { opacity: 1; transform: scale(1); }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+@keyframes slideDown {
+  from { opacity: 0; transform: translateY(-12px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.animate-fade-up   { animation: fadeInUp 0.50s cubic-bezier(0.16, 1, 0.3, 1) both; }
+.animate-fade-up-1 { animation: fadeInUp 0.50s 0.07s  cubic-bezier(0.16, 1, 0.3, 1) both; }
+.animate-fade-up-2 { animation: fadeInUp 0.50s 0.14s  cubic-bezier(0.16, 1, 0.3, 1) both; }
+.animate-fade-up-3 { animation: fadeInUp 0.50s 0.21s  cubic-bezier(0.16, 1, 0.3, 1) both; }
+.animate-fade-up-4 { animation: fadeInUp 0.50s 0.28s  cubic-bezier(0.16, 1, 0.3, 1) both; }
+.animate-fade-up-5 { animation: fadeInUp 0.50s 0.35s  cubic-bezier(0.16, 1, 0.3, 1) both; }
+.animate-fade-left { animation: fadeInLeft 0.50s cubic-bezier(0.16, 1, 0.3, 1) both; }
+.animate-scale-in  { animation: scaleIn 0.40s cubic-bezier(0.16, 1, 0.3, 1) both; }
+.animate-fade-in   { animation: fadeIn 0.40s ease both; }
+.animate-slide-down { animation: slideDown 0.40s cubic-bezier(0.16, 1, 0.3, 1) both; }
+
+/* ─── Interactive polish ─────────────────────────────────────────────────── */
+.card-lift {
+  transition: transform 0.20s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.20s ease;
+}
+.card-lift:hover {
+  transform: translateY(-3px);
+}

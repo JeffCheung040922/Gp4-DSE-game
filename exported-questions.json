@@ -1,0 +1,2557 @@
+[
+  {
+    "setId": "0200073a-8cc8-4eb5-a087-9bb5c2072e2a",
+    "title": "DSE Listening Easy",
+    "subject": "listening",
+    "difficulty": "Easy",
+    "xpReward": 60,
+    "goldReward": 25,
+    "questionCount": 17,
+    "questions": [
+      {
+        "questionNo": 1,
+        "questionText": "Short announcement. “Good morning. The library will close at 5 p.m. today.” When will the library close?",
+        "options": {
+          "A": "4 p.m.",
+          "B": "5 p.m.",
+          "C": "6 p.m.",
+          "D": "7 p.m."
+        },
+        "correctAnswer": "B",
+        "explanation": "The message says “close at 5 p.m.”"
+      },
+      {
+        "questionNo": 2,
+        "questionText": "Phone message. “Hi Sam, I’m on the bus. I’ll arrive in ten minutes.” When will the speaker arrive?",
+        "options": {
+          "A": "In 5 minutes",
+          "B": "In 10 minutes",
+          "C": "In 20 minutes",
+          "D": "Tomorrow"
+        },
+        "correctAnswer": "B",
+        "explanation": "The speaker says “in ten minutes.”"
+      },
+      {
+        "questionNo": 3,
+        "questionText": "Teacher reminder. “Please hand in your homework on Friday, not Thursday.” When is the homework due?",
+        "options": {
+          "A": "Thursday",
+          "B": "Friday",
+          "C": "Saturday",
+          "D": "Monday"
+        },
+        "correctAnswer": "B",
+        "explanation": "It clearly says “on Friday.”"
+      },
+      {
+        "questionNo": 4,
+        "questionText": "Shop sign. “Buy one drink, get one free — today only.” What does the offer mean?",
+        "options": {
+          "A": "Two drinks cost double",
+          "B": "You get a free drink when you buy one",
+          "C": "Drinks are not available today",
+          "D": "Only water is free"
+        },
+        "correctAnswer": "B",
+        "explanation": "“Buy one, get one free” means one free item with one purchase."
+      },
+      {
+        "questionNo": 5,
+        "questionText": "Friend’s text. “Let’s meet at the MTR exit A at 3:30.” Where will they meet?",
+        "options": {
+          "A": "Exit B",
+          "B": "Exit C",
+          "C": "Exit A",
+          "D": "At home"
+        },
+        "correctAnswer": "C",
+        "explanation": "The location is “MTR exit A.”"
+      },
+      {
+        "questionNo": 6,
+        "questionText": "Weather update. “It will be sunny in the morning, but rainy in the afternoon.” When will it rain?",
+        "options": {
+          "A": "Morning",
+          "B": "Afternoon",
+          "C": "All day",
+          "D": "Tonight only"
+        },
+        "correctAnswer": "B",
+        "explanation": "It says “rainy in the afternoon.”"
+      },
+      {
+        "questionNo": 7,
+        "questionText": "Class announcement. “The English speaking practice is moved to Room 402.” Which room is the practice in now?",
+        "options": {
+          "A": "204",
+          "B": "420",
+          "C": "402",
+          "D": "412"
+        },
+        "correctAnswer": "C",
+        "explanation": "It is “moved to Room 402.”"
+      },
+      {
+        "questionNo": 8,
+        "questionText": "Cafeteria notice. “Today’s set lunch includes soup and a main dish.” What is included?",
+        "options": {
+          "A": "Dessert and coffee",
+          "B": "Soup and a main dish",
+          "C": "Soup only",
+          "D": "Main dish only"
+        },
+        "correctAnswer": "B",
+        "explanation": "The notice lists soup + main dish."
+      },
+      {
+        "questionNo": 9,
+        "questionText": "Bus driver. “Next stop: City Hall.” What is the next stop?",
+        "options": {
+          "A": "Museum",
+          "B": "City Hall",
+          "C": "Airport",
+          "D": "Library"
+        },
+        "correctAnswer": "B",
+        "explanation": "The driver announces “Next stop: City Hall.”"
+      },
+      {
+        "questionNo": 10,
+        "questionText": "Lost and found. “A black wallet was found near the playground. Please go to the office.” What was found?",
+        "options": {
+          "A": "A phone",
+          "B": "A key",
+          "C": "A black wallet",
+          "D": "A backpack"
+        },
+        "correctAnswer": "C",
+        "explanation": "The message says “black wallet.”"
+      },
+      {
+        "questionNo": 11,
+        "questionText": "Simple dialogue. A: “Do you want tea or coffee?” B: “Coffee, please.” What does B want?",
+        "options": {
+          "A": "Tea",
+          "B": "Coffee",
+          "C": "Water",
+          "D": "Juice"
+        },
+        "correctAnswer": "B",
+        "explanation": "B says “Coffee, please.”"
+      },
+      {
+        "questionNo": 12,
+        "questionText": "Cinema info. “The movie starts at 7:15. Please be seated by 7:10.” When should people be seated?",
+        "options": {
+          "A": "7:05",
+          "B": "7:10",
+          "C": "7:15",
+          "D": "7:20"
+        },
+        "correctAnswer": "B",
+        "explanation": "It says “be seated by 7:10.”"
+      },
+      {
+        "questionNo": 13,
+        "questionText": "Email snippet. “Your order will arrive on Tuesday.” When will it arrive?",
+        "options": {
+          "A": "Monday",
+          "B": "Tuesday",
+          "C": "Wednesday",
+          "D": "Friday"
+        },
+        "correctAnswer": "B",
+        "explanation": "“Arrive on Tuesday.”"
+      },
+      {
+        "questionNo": 14,
+        "questionText": "School club poster. “Basketball practice: Wednesdays, 4–6 p.m.” Which day is practice?",
+        "options": {
+          "A": "Monday",
+          "B": "Tuesday",
+          "C": "Wednesday",
+          "D": "Friday"
+        },
+        "correctAnswer": "C",
+        "explanation": "The poster says “Wednesdays.”"
+      },
+      {
+        "questionNo": 15,
+        "questionText": "Parent message. “Remember to bring your umbrella.” What should the student bring?",
+        "options": {
+          "A": "A jacket",
+          "B": "An umbrella",
+          "C": "A hat",
+          "D": "Sunglasses"
+        },
+        "correctAnswer": "B",
+        "explanation": "The instruction is “bring your umbrella.”"
+      },
+      {
+        "questionNo": 16,
+        "questionText": "Train announcement. “This train is for Tsim Sha Tsui. Please mind the gap.” Where is this train going?",
+        "options": {
+          "A": "Central",
+          "B": "Tsim Sha Tsui",
+          "C": "Mong Kok",
+          "D": "Sha Tin"
+        },
+        "correctAnswer": "B",
+        "explanation": "It says “train is for Tsim Sha Tsui.”"
+      },
+      {
+        "questionNo": 17,
+        "questionText": "Classroom instruction. “Work in pairs and finish Questions 1 to 5.” How should students work?",
+        "options": {
+          "A": "Alone",
+          "B": "In groups of four",
+          "C": "In pairs",
+          "D": "At home"
+        },
+        "correctAnswer": "C",
+        "explanation": "“Work in pairs.”"
+      }
+    ]
+  },
+  {
+    "setId": "6191d056-42a0-4292-9a3a-d53a5b301d9b",
+    "title": "DSE Listening Hard",
+    "subject": "listening",
+    "difficulty": "Hard",
+    "xpReward": 120,
+    "goldReward": 50,
+    "questionCount": 16,
+    "questions": [
+      {
+        "questionNo": 1,
+        "questionText": "Announcement (multiple details). “Due to a staff meeting, the school office will close at 3:30 today. If you need documents, please collect them before 3:00.” By what time should you collect documents?",
+        "options": {
+          "A": "3:00",
+          "B": "3:30",
+          "C": "4:00",
+          "D": "Tomorrow"
+        },
+        "correctAnswer": "A",
+        "explanation": "It says “collect them before 3:00.”"
+      },
+      {
+        "questionNo": 2,
+        "questionText": "Dialogue (inference). A: “Did you finish the report?” B: “Not yet. I’ll stay up tonight to do it.” What can we infer about B?",
+        "options": {
+          "A": "B finished it already",
+          "B": "B will work on it tonight",
+          "C": "B won’t do it",
+          "D": "B lost the report"
+        },
+        "correctAnswer": "B",
+        "explanation": "“Stay up tonight” implies working tonight."
+      },
+      {
+        "questionNo": 3,
+        "questionText": "Customer complaint (main point). “I ordered a medium pizza, but I received a small one. Could you replace it or refund the difference?” What is the problem?",
+        "options": {
+          "A": "The pizza is cold",
+          "B": "Wrong size delivered",
+          "C": "Wrong topping",
+          "D": "Delivery was free"
+        },
+        "correctAnswer": "B",
+        "explanation": "Medium was ordered; small was received."
+      },
+      {
+        "questionNo": 4,
+        "questionText": "School policy (compare conditions). “Students may use the computer room during lunch only if a teacher is present. After school, students must sign in at the office first.” What must students do to use the computer room after school?",
+        "options": {
+          "A": "Bring their own laptop",
+          "B": "Sign in at the office first",
+          "C": "Pay a fee",
+          "D": "Wear sports uniform"
+        },
+        "correctAnswer": "B",
+        "explanation": "After school rule: “must sign in.”"
+      },
+      {
+        "questionNo": 5,
+        "questionText": "Public transport notice (cause + effect). “Service on the Tsuen Wan Line is delayed due to a signal fault. Consider using the bus as an alternative.” Why is the service delayed?",
+        "options": {
+          "A": "Heavy rain",
+          "B": "Signal fault",
+          "C": "Holiday schedule",
+          "D": "Not enough passengers"
+        },
+        "correctAnswer": "B",
+        "explanation": "The cause is stated: “signal fault.”"
+      },
+      {
+        "questionNo": 6,
+        "questionText": "Dialogue (clarifying a misunderstanding). A: “So we’re meeting on Thursday, right?” B: “No, I said Tuesday. Thursday I have tutorial class.” When are they meeting?",
+        "options": {
+          "A": "Tuesday",
+          "B": "Thursday",
+          "C": "Friday",
+          "D": "Sunday"
+        },
+        "correctAnswer": "A",
+        "explanation": "B corrects it to Tuesday."
+      },
+      {
+        "questionNo": 7,
+        "questionText": "Email (purpose). “I’m writing to confirm our interview appointment at 10:00 a.m. on 12 May. Please reply to acknowledge.” Why did the sender write the email?",
+        "options": {
+          "A": "To cancel an interview",
+          "B": "To confirm an appointment",
+          "C": "To complain about results",
+          "D": "To ask for directions"
+        },
+        "correctAnswer": "B",
+        "explanation": "“Writing to confirm” is explicit."
+      },
+      {
+        "questionNo": 8,
+        "questionText": "Announcement (best action). “The fire alarm has been activated. Please leave the building by the nearest exit. Do not use the lift.” What should people do?",
+        "options": {
+          "A": "Use the lift quickly",
+          "B": "Stay in the classroom",
+          "C": "Leave by the nearest exit",
+          "D": "Hide in the toilet"
+        },
+        "correctAnswer": "C",
+        "explanation": "Evacuation instruction: nearest exit; no lift."
+      },
+      {
+        "questionNo": 9,
+        "questionText": "Dialogue (choice with constraints). A: “We can take a taxi, but it’s expensive.” B: “Let’s take the MTR. It’s cheaper and faster at this time.” Why does B prefer the MTR?",
+        "options": {
+          "A": "It is more comfortable",
+          "B": "It is cheaper and faster",
+          "C": "It is more private",
+          "D": "It is more interesting"
+        },
+        "correctAnswer": "B",
+        "explanation": "B gives two reasons: cheaper + faster."
+      },
+      {
+        "questionNo": 10,
+        "questionText": "Short talk (identify speaker’s attitude). “I understand your point, but I’m not fully convinced. Could you give one more example?” What is the speaker’s attitude?",
+        "options": {
+          "A": "Completely agrees",
+          "B": "Politely doubts and asks for more support",
+          "C": "Angry and refuses to listen",
+          "D": "Confused about the topic"
+        },
+        "correctAnswer": "B",
+        "explanation": "“Not fully convinced” + request for example shows polite doubt."
+      },
+      {
+        "questionNo": 11,
+        "questionText": "Lost item notice (key detail). “If you lost a set of keys with a red keychain, please contact Mr. Lee in Room 105.” What is special about the keys?",
+        "options": {
+          "A": "Blue keychain",
+          "B": "Red keychain",
+          "C": "Silver wallet",
+          "D": "Green bag"
+        },
+        "correctAnswer": "B",
+        "explanation": "The description is “red keychain.”"
+      },
+      {
+        "questionNo": 12,
+        "questionText": "Dialogue (sequence/time). A: “The train leaves at 8:05.” B: “Then we should get there by 7:50 to be safe.” What time do they plan to arrive at the station?",
+        "options": {
+          "A": "7:45",
+          "B": "7:50",
+          "C": "8:05",
+          "D": "8:10"
+        },
+        "correctAnswer": "B",
+        "explanation": "B suggests arriving by 7:50."
+      },
+      {
+        "questionNo": 13,
+        "questionText": "News brief (main idea). “The city will plant 5,000 trees this year to improve air quality and provide more shade in public areas.” What is the main purpose of planting trees?",
+        "options": {
+          "A": "To increase traffic",
+          "B": "To improve air quality and shade",
+          "C": "To build more malls",
+          "D": "To reduce tourism"
+        },
+        "correctAnswer": "B",
+        "explanation": "Two purposes are stated: air quality + shade."
+      },
+      {
+        "questionNo": 14,
+        "questionText": "Classroom discussion summary (identify conclusion). “Most students agreed that homework is useful, but they suggested reducing the amount during exam weeks.” What did most students suggest?",
+        "options": {
+          "A": "No homework at all",
+          "B": "More homework every day",
+          "C": "Reduce homework during exam weeks",
+          "D": "Cancel exams"
+        },
+        "correctAnswer": "C",
+        "explanation": "The suggestion is explicitly stated."
+      },
+      {
+        "questionNo": 15,
+        "questionText": "Service call (pick the best interpretation). “Your internet will be unavailable from 1 a.m. to 3 a.m. for scheduled maintenance.” What does “scheduled maintenance” mean here?",
+        "options": {
+          "A": "A surprise problem",
+          "B": "Planned work to improve or fix the service",
+          "C": "A price increase",
+          "D": "A new phone line"
+        },
+        "correctAnswer": "B",
+        "explanation": "“Scheduled” means planned; maintenance is service work."
+      },
+      {
+        "questionNo": 16,
+        "questionText": "Dialogue (polite refusal). A: “Can you join the meeting at 6?” B: “I’d like to, but I have a part-time job then. Could we do 7 instead?” What does B do?",
+        "options": {
+          "A": "Refuses rudely",
+          "B": "Accepts without changes",
+          "C": "Cannot at 6 and suggests a new time",
+          "D": "Cancels the meeting forever"
+        },
+        "correctAnswer": "C",
+        "explanation": "B can’t do 6, but proposes 7."
+      }
+    ]
+  },
+  {
+    "setId": "78812634-d52e-4e0c-b2b2-6b48465f9c2b",
+    "title": "DSE Listening Medium",
+    "subject": "listening",
+    "difficulty": "Medium",
+    "xpReward": 80,
+    "goldReward": 35,
+    "questionCount": 17,
+    "questions": [
+      {
+        "questionNo": 1,
+        "questionText": "School announcement. “The sports day has been postponed because of heavy rain. It will be held next Friday instead.” Why is sports day postponed?",
+        "options": {
+          "A": "Not enough students",
+          "B": "Heavy rain",
+          "C": "Teachers are busy",
+          "D": "The venue is closed forever"
+        },
+        "correctAnswer": "B",
+        "explanation": "It says “because of heavy rain.”"
+      },
+      {
+        "questionNo": 2,
+        "questionText": "Dialogue (plans). A: “Let’s meet at 2:00.” B: “I can’t. How about 2:30?” A: “Okay.” What time will they meet?",
+        "options": {
+          "A": "2:00",
+          "B": "2:15",
+          "C": "2:30",
+          "D": "3:00"
+        },
+        "correctAnswer": "C",
+        "explanation": "They agree on 2:30."
+      },
+      {
+        "questionNo": 3,
+        "questionText": "Customer service message. “To change your password, click ‘Settings’, then ‘Account’, and choose ‘Reset Password’.” What should you click first?",
+        "options": {
+          "A": "Account",
+          "B": "Settings",
+          "C": "Reset Password",
+          "D": "Help"
+        },
+        "correctAnswer": "B",
+        "explanation": "The first step is “click ‘Settings’.”"
+      },
+      {
+        "questionNo": 4,
+        "questionText": "Teacher feedback. “Your presentation was clear, but please speak a little louder next time.” What should the student improve?",
+        "options": {
+          "A": "Slides design",
+          "B": "Speaking louder",
+          "C": "Arriving earlier",
+          "D": "Writing longer sentences"
+        },
+        "correctAnswer": "B",
+        "explanation": "The teacher says “speak a little louder.”"
+      },
+      {
+        "questionNo": 5,
+        "questionText": "Restaurant notice. “Lunch set is available until 2:30 p.m. After that, only the regular menu is served.” What happens after 2:30 p.m.?",
+        "options": {
+          "A": "The restaurant closes",
+          "B": "Lunch set becomes cheaper",
+          "C": "Only the regular menu is served",
+          "D": "Breakfast starts"
+        },
+        "correctAnswer": "C",
+        "explanation": "It states “only the regular menu.”"
+      },
+      {
+        "questionNo": 6,
+        "questionText": "Travel announcement. “Passengers to Gate 12, your flight will begin boarding in 15 minutes.” What will happen in 15 minutes?",
+        "options": {
+          "A": "The flight lands",
+          "B": "Boarding begins",
+          "C": "Baggage claim opens",
+          "D": "The gate closes"
+        },
+        "correctAnswer": "B",
+        "explanation": "“Begin boarding in 15 minutes.”"
+      },
+      {
+        "questionNo": 7,
+        "questionText": "Dialogue (choosing). A: “Do you want to watch a comedy or an action movie?” B: “Action, but not too violent.” What does B prefer?",
+        "options": {
+          "A": "Comedy",
+          "B": "Action (not too violent)",
+          "C": "Horror",
+          "D": "Romance"
+        },
+        "correctAnswer": "B",
+        "explanation": "B chooses action with a condition."
+      },
+      {
+        "questionNo": 8,
+        "questionText": "Club email. “Please arrive at 3:45 to set up. The meeting starts at 4:00 sharp.” Why should members arrive at 3:45?",
+        "options": {
+          "A": "To take a test",
+          "B": "To set up",
+          "C": "To leave early",
+          "D": "To watch a movie"
+        },
+        "correctAnswer": "B",
+        "explanation": "It says “arrive…to set up.”"
+      },
+      {
+        "questionNo": 9,
+        "questionText": "Phone message (problem + solution). “The lift is out of order today. Please use the stairs or the lift in Block B.” What should people do?",
+        "options": {
+          "A": "Wait all day",
+          "B": "Use the stairs or Block B lift",
+          "C": "Cancel school",
+          "D": "Call their friends"
+        },
+        "correctAnswer": "B",
+        "explanation": "Two alternatives are given."
+      },
+      {
+        "questionNo": 10,
+        "questionText": "Library rule. “You may borrow up to three books for two weeks.” How many books can you borrow?",
+        "options": {
+          "A": "Two",
+          "B": "Three",
+          "C": "Four",
+          "D": "Unlimited"
+        },
+        "correctAnswer": "B",
+        "explanation": "“Up to three books.”"
+      },
+      {
+        "questionNo": 11,
+        "questionText": "Weather warning. “A strong wind signal is in force. Secure loose objects near windows.” What should people do?",
+        "options": {
+          "A": "Open all windows",
+          "B": "Secure loose objects",
+          "C": "Go hiking",
+          "D": "Ignore the warning"
+        },
+        "correctAnswer": "B",
+        "explanation": "The instruction is “secure loose objects.”"
+      },
+      {
+        "questionNo": 12,
+        "questionText": "Online order update. “Your package was delivered, but no one was at home. It will be re-delivered tomorrow afternoon.” When will it be re-delivered?",
+        "options": {
+          "A": "Tomorrow morning",
+          "B": "Tomorrow afternoon",
+          "C": "Today afternoon",
+          "D": "Next week"
+        },
+        "correctAnswer": "B",
+        "explanation": "It says “tomorrow afternoon.”"
+      },
+      {
+        "questionNo": 13,
+        "questionText": "Dialogue (reason). A: “Why didn’t you join the basketball match?” B: “I had a fever, so I stayed home.” Why didn’t B join?",
+        "options": {
+          "A": "Didn’t like basketball",
+          "B": "Had a fever",
+          "C": "Was late",
+          "D": "Forgot the time"
+        },
+        "correctAnswer": "B",
+        "explanation": "B gives the reason: “I had a fever.”"
+      },
+      {
+        "questionNo": 14,
+        "questionText": "School trip note. “Bring your student ID and a packed lunch. Do not bring valuables.” What should students NOT bring?",
+        "options": {
+          "A": "Student ID",
+          "B": "Packed lunch",
+          "C": "Valuables",
+          "D": "Water"
+        },
+        "correctAnswer": "C",
+        "explanation": "It explicitly says “Do not bring valuables.”"
+      },
+      {
+        "questionNo": 15,
+        "questionText": "Small news report. “The road will be closed for repairs from 10 p.m. to 6 a.m.” When is the road closed?",
+        "options": {
+          "A": "10 a.m. to 6 p.m.",
+          "B": "10 p.m. to 6 a.m.",
+          "C": "6 a.m. to 10 p.m.",
+          "D": "All day"
+        },
+        "correctAnswer": "B",
+        "explanation": "The time period is given directly."
+      },
+      {
+        "questionNo": 16,
+        "questionText": "Dialogue (preference change). A: “Do you still want to eat Japanese food?” B: “Actually, I’d rather have Thai food today.” What does B want now?",
+        "options": {
+          "A": "Japanese food",
+          "B": "Thai food",
+          "C": "Italian food",
+          "D": "No food"
+        },
+        "correctAnswer": "B",
+        "explanation": "“Actually…rather have Thai food.”"
+      },
+      {
+        "questionNo": 17,
+        "questionText": "Teacher instruction (sequence). “First, read the article. Then answer Questions 1–8. Finally, check your answers with a partner.” What should students do after answering the questions?",
+        "options": {
+          "A": "Read the article again",
+          "B": "Hand in immediately",
+          "C": "Check with a partner",
+          "D": "Leave the classroom"
+        },
+        "correctAnswer": "C",
+        "explanation": "The final step is “check…with a partner.”"
+      }
+    ]
+  },
+  {
+    "setId": "5d5f1456-6de8-4ae5-bd34-aff8d9a5687b",
+    "title": "Test Reading Set",
+    "subject": "reading",
+    "difficulty": "Easy",
+    "xpReward": 50,
+    "goldReward": 20,
+    "questionCount": 1,
+    "questions": [
+      {
+        "questionNo": 1,
+        "questionText": "The word \"abundant\" means?",
+        "options": {
+          "A": "Very scarce",
+          "B": "Existing in large quantities",
+          "C": "Completely empty",
+          "D": "Impossible to find"
+        },
+        "correctAnswer": "B",
+        "explanation": "\"Abundant\" means plentiful or existing in large amounts."
+      }
+    ]
+  },
+  {
+    "setId": "7534b3d9-9211-4617-bfc0-b7e7c8564470",
+    "title": "DSE Reading Easy",
+    "subject": "reading",
+    "difficulty": "Easy",
+    "xpReward": 60,
+    "goldReward": 25,
+    "questionCount": 17,
+    "questions": [
+      {
+        "questionNo": 1,
+        "questionText": "Hong Kong has a famous harbour. Many tourists visit it every year. What is the main attraction mentioned?",
+        "options": {
+          "A": "Mountains",
+          "B": "Harbour",
+          "C": "Beaches",
+          "D": "Parks"
+        },
+        "correctAnswer": "B",
+        "explanation": "The passage directly says Hong Kong has a famous harbour."
+      },
+      {
+        "questionNo": 2,
+        "questionText": "The Peak Tram takes people up to Victoria Peak. Where does the Peak Tram go?",
+        "options": {
+          "A": "To the",
+          "B": "each B. To Victoria Peak",
+          "C": "To",
+          "D": "isneyland D. To the airport"
+        },
+        "correctAnswer": "B",
+        "explanation": "It “takes people up to Victoria Peak.”"
+      },
+      {
+        "questionNo": 3,
+        "questionText": "MTR is the fastest way to travel in Hong Kong. It is clean and air-conditioned. What is one good thing about the MTR?",
+        "options": {
+          "A": "It is slow",
+          "B": "It is",
+          "C": "lean C. It is expensive",
+          "D": "It is dirty"
+        },
+        "correctAnswer": "B",
+        "explanation": "The text states the MTR is clean (and air-conditioned)."
+      },
+      {
+        "questionNo": 4,
+        "questionText": "Dim sum is a traditional Hong Kong food. People eat it with tea in the morning. When do people usually eat dim sum?",
+        "options": {
+          "A": "At night",
+          "B": "In the morning",
+          "C": "At lunch",
+          "D": "In the evening"
+        },
+        "correctAnswer": "B",
+        "explanation": "The passage says people eat it in the morning."
+      },
+      {
+        "questionNo": 5,
+        "questionText": "Ocean Park has pandas and dolphins. What animals can you see at Ocean Park?",
+        "options": {
+          "A": "Only lions",
+          "B": "Pandas and dolphins",
+          "C": "Only tigers",
+          "D": "Only birds"
+        },
+        "correctAnswer": "B",
+        "explanation": "The animals mentioned are pandas and dolphins."
+      },
+      {
+        "questionNo": 6,
+        "questionText": "Hong Kong Disneyland is fun for children. Who enjoys Disneyland the most?",
+        "options": {
+          "A": "Adults only",
+          "B": "Children",
+          "C": "Old people",
+          "D": "Tourists only"
+        },
+        "correctAnswer": "B",
+        "explanation": "The sentence says it is fun for children."
+      },
+      {
+        "questionNo": 7,
+        "questionText": "The weather in Hong Kong is hot and humid in summer. How is the summer weather?",
+        "options": {
+          "A": "Cold and dry",
+          "B": "Hot and humid",
+          "C": "Cool and wet",
+          "D": "Warm and sunny"
+        },
+        "correctAnswer": "B",
+        "explanation": "It directly states hot and humid."
+      },
+      {
+        "questionNo": 8,
+        "questionText": "Students in Hong Kong study hard for the HKDSE. Why do students study hard?",
+        "options": {
+          "A": "For fun",
+          "B": "For good HKDSE results",
+          "C": "For holidays",
+          "D": "For sports"
+        },
+        "correctAnswer": "B",
+        "explanation": "They study hard for the HKDSE and want good results."
+      },
+      {
+        "questionNo": 9,
+        "questionText": "The Star Ferry is cheap and has nice views of the harbour. What is one advantage of the Star Ferry?",
+        "options": {
+          "A": "It is expensive",
+          "B": "It is",
+          "C": "heap C. It is slow",
+          "D": "It has no views"
+        },
+        "correctAnswer": "B",
+        "explanation": "One stated advantage is it is cheap."
+      },
+      {
+        "questionNo": 10,
+        "questionText": "Tai O is a fishing village in Hong Kong. It has stilt houses. What is special about Tai O?",
+        "options": {
+          "A": "Modern",
+          "B": "uildings B. Stilt houses",
+          "C": "Tall skyscrapers",
+          "D": "Big malls"
+        },
+        "correctAnswer": "B",
+        "explanation": "The special feature mentioned is stilt houses."
+      },
+      {
+        "questionNo": 11,
+        "questionText": "English is important for jobs in Hong Kong. Why is English important?",
+        "options": {
+          "A": "For school only",
+          "B": "For jobs",
+          "C": "For sports",
+          "D": "For cooking"
+        },
+        "correctAnswer": "B",
+        "explanation": "The passage links English to jobs."
+      },
+      {
+        "questionNo": 12,
+        "questionText": "The Big Buddha on Lantau Island is very big and famous. Where is the Big Buddha?",
+        "options": {
+          "A": "Hong Kong Island",
+          "B": "Lantau Island",
+          "C": "Kowloon",
+          "D": "New Territories"
+        },
+        "correctAnswer": "B",
+        "explanation": "It says it is on Lantau Island."
+      },
+      {
+        "questionNo": 13,
+        "questionText": "Reading books helps improve English. What helps improve English?",
+        "options": {
+          "A": "Watching TV",
+          "B": "Reading books",
+          "C": "Playing games",
+          "D": "Sleeping"
+        },
+        "correctAnswer": "B",
+        "explanation": "The passage states reading books helps."
+      },
+      {
+        "questionNo": 14,
+        "questionText": "Hong Kong has many shopping malls like Times Square. Name one famous shopping place.",
+        "options": {
+          "A": "Ocean Park",
+          "B": "Times Square",
+          "C": "The Peak",
+          "D": "Tai O"
+        },
+        "correctAnswer": "B",
+        "explanation": "Times Square is named as a shopping mall."
+      },
+      {
+        "questionNo": 15,
+        "questionText": "Typhoons sometimes come to Hong Kong in summer. People stay indoors. What do people do during a typhoon?",
+        "options": {
+          "A": "Go outside",
+          "B": "Stay indoors",
+          "C": "Swim",
+          "D": "Shop"
+        },
+        "correctAnswer": "B",
+        "explanation": "The text says people stay indoors."
+      },
+      {
+        "questionNo": 16,
+        "questionText": "The Hong Kong Museum of History is free on Wednesdays. When is the museum free?",
+        "options": {
+          "A": "Every day",
+          "B": "On Wednesdays",
+          "C": "On Sundays",
+          "D": "Never"
+        },
+        "correctAnswer": "B",
+        "explanation": "It is free on Wednesdays."
+      },
+      {
+        "questionNo": 17,
+        "questionText": "Cantonese is the main language in Hong Kong. What is the main language?",
+        "options": {
+          "A": "English",
+          "B": "Cantonese",
+          "C": "Mandarin",
+          "D": "Japanese"
+        },
+        "correctAnswer": "B",
+        "explanation": "The passage says Cantonese is the main language."
+      }
+    ]
+  },
+  {
+    "setId": "023cd63c-c87f-49c3-8fa8-094c1b6aec19",
+    "title": "DSE Reading Hard",
+    "subject": "reading",
+    "difficulty": "Hard",
+    "xpReward": 120,
+    "goldReward": 50,
+    "questionCount": 16,
+    "questions": [
+      {
+        "questionNo": 1,
+        "questionText": "Rapid urban development has led to loss of traditional villages. What is implied?",
+        "options": {
+          "A": "Villages are growing",
+          "B": "Traditional",
+          "C": "ulture is",
+          "D": "isappearing C. Development is bad for economy D. No change has happened"
+        },
+        "correctAnswer": "B",
+        "explanation": "Losing villages implies traditional culture is fading."
+      },
+      {
+        "questionNo": 2,
+        "questionText": "“Not only… but also…” many find it challenging. What is the author’s tone?",
+        "options": {
+          "A": "Excited",
+          "B": "Concerned about difficulty",
+          "C": "Humorous",
+          "D": "Bored"
+        },
+        "correctAnswer": "B",
+        "explanation": "“Many students find challenging” signals concern about difficulty."
+      },
+      {
+        "questionNo": 3,
+        "questionText": "“..., albeit ambitious, ...” What does “albeit” mean?",
+        "options": {
+          "A": "Because",
+          "B": "Although",
+          "C": "Therefore",
+          "D": "However"
+        },
+        "correctAnswer": "B",
+        "explanation": "Albeit means although."
+      },
+      {
+        "questionNo": 4,
+        "questionText": "“City that never sleeps… suffers from noise pollution at night.” What is the irony?",
+        "options": {
+          "A": "The city is quiet",
+          "B": "The busy",
+          "C": "ity has noise problems C. No noise at all",
+          "D": "People sleep well"
+        },
+        "correctAnswer": "B",
+        "explanation": "The “never sleeps” image fits noise—but calling it ironically highlights the negative consequence."
+      },
+      {
+        "questionNo": 5,
+        "questionText": "Writer’s purpose in editorial about youth unemployment?",
+        "options": {
+          "A": "To entertain readers",
+          "B": "To urge action from the government",
+          "C": "To",
+          "D": "escribe a festival D. To sell products"
+        },
+        "correctAnswer": "B",
+        "explanation": "Editorials typically argue/urge action, especially on social issues."
+      },
+      {
+        "questionNo": 6,
+        "questionText": "Flyovers symbolise both progress and congestion. Infer the dual meaning.",
+        "options": {
+          "A": "Only progress",
+          "B": "Progress but also problems",
+          "C": "Only congestion",
+          "D": "No meaning"
+        },
+        "correctAnswer": "B",
+        "explanation": "“Both” signals benefit + drawback."
+      },
+      {
+        "questionNo": 7,
+        "questionText": "“Mitigate climate change… include planting more trees.” “Mitigate” means:",
+        "options": {
+          "A": "Increase",
+          "B": "Reduce the effects of",
+          "C": "Ignore",
+          "D": "Celebrate"
+        },
+        "correctAnswer": "B",
+        "explanation": "Mitigate = reduce harm/impact."
+      },
+      {
+        "questionNo": 8,
+        "questionText": "Globalisation brings opportunities but erodes local identity. Main concern?",
+        "options": {
+          "A": "Too few opportunities",
+          "B": "Loss of local",
+          "C": "ulture C. No globalisation",
+          "D": "Only positive effects"
+        },
+        "correctAnswer": "B",
+        "explanation": "The concern stated is cultural erosion."
+      },
+      {
+        "questionNo": 9,
+        "questionText": "Tone of article on HKDSE pressure is:",
+        "options": {
+          "A": "Supportive and encouraging",
+          "B": "Critical of excessive stress",
+          "C": "Neutral",
+          "D": "Joyful"
+        },
+        "correctAnswer": "B",
+        "explanation": "Focus on pressure suggests criticism of too much stress."
+      },
+      {
+        "questionNo": 10,
+        "questionText": "Proposal overlooks socioeconomic disparities. What does the writer suggest?",
+        "options": {
+          "A": "The proposal is perfect",
+          "B": "It ignores differences between rich and poor students",
+          "C": "No",
+          "D": "isparities exist D. Students are all the same"
+        },
+        "correctAnswer": "B",
+        "explanation": "“Overlooks disparities” = ignores rich/poor differences."
+      },
+      {
+        "questionNo": 11,
+        "questionText": "Heritage buildings revitalised—“a testament to shifting priorities.” Infer:",
+        "options": {
+          "A": "Heritage is still ignored",
+          "B": "Priorities have",
+          "C": "hanged to protect heritage C. No change in priorities",
+          "D": "Buildings are destroyed"
+        },
+        "correctAnswer": "B",
+        "explanation": "Revitalisation shows greater value placed on heritage."
+      },
+      {
+        "questionNo": 12,
+        "questionText": "Paradox: efficient city struggles with work-life balance. What is the paradox?",
+        "options": {
+          "A": "Efficiency causes",
+          "B": "alance B. Efficiency exists but balance is poor",
+          "C": "No efficiency",
+          "D": "Balance is easy"
+        },
+        "correctAnswer": "B",
+        "explanation": "Two ideas seem to conflict: high efficiency yet poor balance."
+      },
+      {
+        "questionNo": 13,
+        "questionText": "Apps enhance learning, but over-reliance may hinder deep thinking. Attitude?",
+        "options": {
+          "A": "Fully positive",
+          "B": "Balanced with",
+          "C": "aution C. Completely negative",
+          "D": "Indifferent"
+        },
+        "correctAnswer": "B",
+        "explanation": "It recognises benefits but warns about risks = balanced."
+      },
+      {
+        "questionNo": 14,
+        "questionText": "“Underscores the resilience…” “Underscores” means:",
+        "options": {
+          "A": "Ignores",
+          "B": "Emphasises",
+          "C": "Denies",
+          "D": "Forgets"
+        },
+        "correctAnswer": "B",
+        "explanation": "Underscore = emphasise."
+      },
+      {
+        "questionNo": 15,
+        "questionText": "Globalisation intensified competition for limited resources. Implied challenge?",
+        "options": {
+          "A": "Too few resources for competition",
+          "B": "Competition for resources has increased",
+          "C": "No transformation",
+          "D": "Resources are unlimited"
+        },
+        "correctAnswer": "B",
+        "explanation": "“Intensified competition” = more competition for limited resources."
+      },
+      {
+        "questionNo": 16,
+        "questionText": "“Notwithstanding… yearn for the simplicity of yesteryear.” What do people yearn for?",
+        "options": {
+          "A": "More modern life",
+          "B": "Simplicity of the past",
+          "C": "No conveniences",
+          "D": "Future technology"
+        },
+        "correctAnswer": "B",
+        "explanation": "It directly says they yearn for the simpler past."
+      }
+    ]
+  },
+  {
+    "setId": "1ab66601-f01c-4894-afba-428619535f92",
+    "title": "DSE Reading Medium",
+    "subject": "reading",
+    "difficulty": "Medium",
+    "xpReward": 80,
+    "goldReward": 35,
+    "questionCount": 17,
+    "questions": [
+      {
+        "questionNo": 1,
+        "questionText": "Many young people use social media… some worry about too much screen time. What is a common worry?",
+        "options": {
+          "A": "Too little time online",
+          "B": "Too much screen time",
+          "C": "No friends",
+          "D": "No phones"
+        },
+        "correctAnswer": "B",
+        "explanation": "The worry mentioned is too much screen time."
+      },
+      {
+        "questionNo": 2,
+        "questionText": "“Public transport is efficient but crowded…” What does “efficient” mean here?",
+        "options": {
+          "A": "Slow",
+          "B": "Fast and reliable",
+          "C": "Expensive",
+          "D": "Old"
+        },
+        "correctAnswer": "B",
+        "explanation": "In transport context, efficient = works well, fast and reliable."
+      },
+      {
+        "questionNo": 3,
+        "questionText": "Reading the newspaper every day helps students learn new words. What is the main idea?",
+        "options": {
+          "A": "Newspapers are",
+          "B": "oring B. Reading newspapers improves vocabulary",
+          "C": "Students hate reading",
+          "D": "Newspapers are free"
+        },
+        "correctAnswer": "B",
+        "explanation": "“Learn new words” = improves vocabulary."
+      },
+      {
+        "questionNo": 4,
+        "questionText": "Good English scores open doors to universities. What does a good English score help with?",
+        "options": {
+          "A": "Getting a job only",
+          "B": "University admission",
+          "C": "Playing sports",
+          "D": "Cooking"
+        },
+        "correctAnswer": "B",
+        "explanation": "It says scores open doors to universities."
+      },
+      {
+        "questionNo": 5,
+        "questionText": "Although the weather is hot, people still enjoy hiking. What can you infer?",
+        "options": {
+          "A": "Hiking is impossible in hot weather",
+          "B": "People like hiking even when hot",
+          "C": "No one hikes",
+          "D": "Hiking is only for winter"
+        },
+        "correctAnswer": "B",
+        "explanation": "They still hike, so they enjoy it despite heat."
+      },
+      {
+        "questionNo": 6,
+        "questionText": "“Hong Kong people are resilient after typhoons.” Meaning of “resilient”?",
+        "options": {
+          "A": "Weak",
+          "B": "Strong and quick to recover",
+          "C": "Lazy",
+          "D": "Angry"
+        },
+        "correctAnswer": "B",
+        "explanation": "Resilient = recover quickly after difficulties."
+      },
+      {
+        "questionNo": 7,
+        "questionText": "Economy depends on tourism and finance. Name two important industries.",
+        "options": {
+          "A": "Farming and fishing",
+          "B": "Tourism and finance",
+          "C": "Mining and oil",
+          "D": "Only education"
+        },
+        "correctAnswer": "B",
+        "explanation": "The text explicitly lists tourism and finance."
+      },
+      {
+        "questionNo": 8,
+        "questionText": "Purpose of passage about environmental protection?",
+        "options": {
+          "A": "To entertain",
+          "B": "To persuade people to recycle",
+          "C": "To",
+          "D": "escribe food D. To sell products"
+        },
+        "correctAnswer": "B",
+        "explanation": "Environmental protection passages commonly aim to persuade action like recycling."
+      },
+      {
+        "questionNo": 9,
+        "questionText": "“MTR is convenient, yet some prefer buses because they see more of the city.” Why choose buses?",
+        "options": {
+          "A": "To save money",
+          "B": "To see more of the",
+          "C": "ity C. To go faster",
+          "D": "To avoid crowds"
+        },
+        "correctAnswer": "B",
+        "explanation": "The sentence gives the reason: see more of the city."
+      },
+      {
+        "questionNo": 10,
+        "questionText": "Student practised every day for speaking exam. What helped the student?",
+        "options": {
+          "A": "Doing nothing",
+          "B": "Daily practice",
+          "C": "Watching movies",
+          "D": "Sleeping late"
+        },
+        "correctAnswer": "B",
+        "explanation": "Improvement is linked to daily practice."
+      },
+      {
+        "questionNo": 11,
+        "questionText": "Meaning of “sustainable tourism”?",
+        "options": {
+          "A": "Cheap travel",
+          "B": "Travel that protects the environment",
+          "C": "Fast travel",
+          "D": "Only local travel"
+        },
+        "correctAnswer": "B",
+        "explanation": "Sustainable tourism = tourism that protects the environment."
+      },
+      {
+        "questionNo": 12,
+        "questionText": "“Dim sum restaurants are busy on weekends.” What can you infer?",
+        "options": {
+          "A": "Few people eat dim sum",
+          "B": "Many people eat dim sum on weekends",
+          "C": "Restaurants are closed",
+          "D": "Dim sum is expensive"
+        },
+        "correctAnswer": "B",
+        "explanation": "If restaurants are busy, many people go then."
+      },
+      {
+        "questionNo": 13,
+        "questionText": "“Vibrant” describes Hong Kong’s night market. It means:",
+        "options": {
+          "A": "Quiet",
+          "B": "Full of energy and life",
+          "C": "Dark",
+          "D": "Empty"
+        },
+        "correctAnswer": "B",
+        "explanation": "Vibrant = lively, energetic."
+      },
+      {
+        "questionNo": 14,
+        "questionText": "Main problem about young people in HK?",
+        "options": {
+          "A": "Too much free time",
+          "B": "Study pressure and stress",
+          "C": "No schools",
+          "D": "Too many holidays"
+        },
+        "correctAnswer": "B",
+        "explanation": "The topic focuses on study pressure/stress."
+      },
+      {
+        "questionNo": 15,
+        "questionText": "English is important, but students prefer Cantonese with friends. What does this show?",
+        "options": {
+          "A": "Students never use English",
+          "B": "Cantonese is more",
+          "C": "omfortable with friends C. No one speaks Cantonese",
+          "D": "English is useless"
+        },
+        "correctAnswer": "B",
+        "explanation": "Preference shows Cantonese feels more natural socially."
+      },
+      {
+        "questionNo": 16,
+        "questionText": "Reading English books improves writing skills. How does reading help writing?",
+        "options": {
+          "A": "It makes writing worse",
+          "B": "It improves writing skills",
+          "C": "It has no effect",
+          "D": "Only for speaking"
+        },
+        "correctAnswer": "B",
+        "explanation": "The passage directly states reading improves writing."
+      },
+      {
+        "questionNo": 17,
+        "questionText": "Attitude to public holidays: relax but can cause traffic jams.",
+        "options": {
+          "A": "Completely negative",
+          "B": "Mixed feelings",
+          "C": "Very positive",
+          "D": "No opinion"
+        },
+        "correctAnswer": "B",
+        "explanation": "It shows both pros and cons, so attitude is mixed."
+      }
+    ]
+  },
+  {
+    "setId": "31462d66-1b71-4e13-b99e-99803cf23972",
+    "title": "DSE Speaking Easy",
+    "subject": "speaking",
+    "difficulty": "Easy",
+    "xpReward": 60,
+    "goldReward": 25,
+    "questionCount": 17,
+    "questions": [
+      {
+        "questionNo": 1,
+        "questionText": "Friend: “Would you like to go hiking at Lion Rock this Saturday?”",
+        "options": {
+          "A": "No…",
+          "B": "Sure…What time…",
+          "C": "Maybe next year",
+          "D": "I don’t know"
+        },
+        "correctAnswer": "B",
+        "explanation": "It accepts politely and keeps the conversation going by asking for meeting details."
+      },
+      {
+        "questionNo": 2,
+        "questionText": "Teacher: “What do you think about learning English?”",
+        "options": {
+          "A": "boring/useless",
+          "B": "useful for future studies/career",
+          "C": "I don’t care",
+          "D": "No comment"
+        },
+        "correctAnswer": "B",
+        "explanation": "It gives a clear opinion and supports it with a sensible reason."
+      },
+      {
+        "questionNo": 3,
+        "questionText": "Friend: “Did you enjoy the dim sum lunch yesterday?”",
+        "options": {
+          "A": "terrible",
+          "B": "yes…especially har gow and siu mai",
+          "C": "don’t remember",
+          "D": "No"
+        },
+        "correctAnswer": "B",
+        "explanation": "It answers directly and adds specific details, which makes the reply natural."
+      },
+      {
+        "questionNo": 4,
+        "questionText": "Classmate: “How do you go to school every day?”",
+        "options": {
+          "A": "I walk",
+          "B": "take MTR…fast and convenient",
+          "C": "bus sometimes",
+          "D": "don’t go"
+        },
+        "correctAnswer": "B",
+        "explanation": "It clearly answers the question and adds a short reason."
+      },
+      {
+        "questionNo": 5,
+        "questionText": "Friend: “The weather is so hot today!”",
+        "options": {
+          "A": "extremely hot and humid",
+          "B": "like cold",
+          "C": "not hot",
+          "D": "whatever"
+        },
+        "correctAnswer": "A",
+        "explanation": "It agrees appropriately and uses accurate descriptive language."
+      },
+      {
+        "questionNo": 6,
+        "questionText": "Teacher: “Have you finished your English homework?”",
+        "options": {
+          "A": "not yet…but finish tonight",
+          "B": "won’t do it",
+          "C": "lost it",
+          "D": "yes long ago"
+        },
+        "correctAnswer": "A",
+        "explanation": "It is honest and responsible, and it includes a clear plan to complete it."
+      },
+      {
+        "questionNo": 7,
+        "questionText": "Friend: “Do you want to watch a movie at Times Square this weekend?”",
+        "options": {
+          "A": "no way",
+          "B": "yes…which movie?",
+          "C": "movies boring",
+          "D": "maybe never"
+        },
+        "correctAnswer": "B",
+        "explanation": "It shows interest and asks a follow-up question to continue planning."
+      },
+      {
+        "questionNo": 8,
+        "questionText": "Stranger: “Excuse me, is this the train to Central?”",
+        "options": {
+          "A": "yes",
+          "B": "yes…correct train to Central",
+          "C": "don’t know",
+          "D": "go away"
+        },
+        "correctAnswer": "B",
+        "explanation": "It is polite and gives a complete, helpful answer."
+      },
+      {
+        "questionNo": 9,
+        "questionText": "Mother: “How was your HKDSE mock exam today?”",
+        "options": {
+          "A": "okay…but difficult",
+          "B": "failed everything",
+          "C": "don’t want to talk",
+          "D": "super easy"
+        },
+        "correctAnswer": "A",
+        "explanation": "It gives a balanced response and provides a specific detail."
+      },
+      {
+        "questionNo": 10,
+        "questionText": "Friend: “Happy Birthday!”",
+        "options": {
+          "A": "thanks",
+          "B": "thanks…very kind",
+          "C": "whatever",
+          "D": "I know"
+        },
+        "correctAnswer": "B",
+        "explanation": "It shows gratitude in a warm, socially appropriate way."
+      },
+      {
+        "questionNo": 11,
+        "questionText": "Teacher: “Why do you want to improve your English speaking?”",
+        "options": {
+          "A": "better HKDSE speaking results",
+          "B": "no reason",
+          "C": "don’t want",
+          "D": "fun only"
+        },
+        "correctAnswer": "A",
+        "explanation": "It gives a clear purpose that is relevant to school and exams."
+      },
+      {
+        "questionNo": 12,
+        "questionText": "Classmate: “Let’s study together for the English exam.”",
+        "options": {
+          "A": "good idea…when/where?",
+          "B": "no",
+          "C": "busy forever",
+          "D": "maybe"
+        },
+        "correctAnswer": "A",
+        "explanation": "It agrees and asks practical questions to arrange the study session."
+      },
+      {
+        "questionNo": 13,
+        "questionText": "Friend: “What is your favourite place in Hong Kong?”",
+        "options": {
+          "A": "The Peak…beautiful view",
+          "B": "nowhere",
+          "C": "school",
+          "D": "don’t like anywhere"
+        },
+        "correctAnswer": "A",
+        "explanation": "It answers with a specific place and a reason, which is clear and engaging."
+      },
+      {
+        "questionNo": 14,
+        "questionText": "Waiter: “Would you like some more tea?”",
+        "options": {
+          "A": "yes please thank you",
+          "B": "no",
+          "C": "coffee instead",
+          "D": "whatever"
+        },
+        "correctAnswer": "A",
+        "explanation": "It is polite and uses appropriate service-language."
+      },
+      {
+        "questionNo": 15,
+        "questionText": "Friend: “I passed my English test!”",
+        "options": {
+          "A": "congratulations",
+          "B": "so what",
+          "C": "don’t care",
+          "D": "okay"
+        },
+        "correctAnswer": "A",
+        "explanation": "It responds positively and shows support, which fits the situation."
+      },
+      {
+        "questionNo": 16,
+        "questionText": "Teacher: “Can you tell the class about your favourite festival?”",
+        "options": {
+          "A": "CNY…red packets",
+          "B": "don’t have any",
+          "C": "no",
+          "D": "boring"
+        },
+        "correctAnswer": "A",
+        "explanation": "It gives a complete sentence with a simple reason/example."
+      },
+      {
+        "questionNo": 17,
+        "questionText": "Friend: “Shall we go to Ocean Park during the holidays?”",
+        "options": {
+          "A": "sure…see pandas again",
+          "B": "animals scary",
+          "C": "next life",
+          "D": "hate Ocean Park"
+        },
+        "correctAnswer": "A",
+        "explanation": "It accepts enthusiastically and adds a reason, making it friendly and natural."
+      }
+    ]
+  },
+  {
+    "setId": "09ec18d7-ac6a-482c-b8f2-3a72a23f504e",
+    "title": "DSE Speaking Hard",
+    "subject": "speaking",
+    "difficulty": "Hard",
+    "xpReward": 120,
+    "goldReward": 50,
+    "questionCount": 16,
+    "questions": [
+      {
+        "questionNo": 1,
+        "questionText": "Debate: “HKDSE puts too much pressure on students.”",
+        "options": {
+          "A": "balanced view…stress + preparation builds resilience/opportunities",
+          "B": "cancel exams",
+          "C": "agree",
+          "D": "no opinion"
+        },
+        "correctAnswer": "A",
+        "explanation": "It acknowledges the problem but provides a mature, balanced perspective and outcome."
+      },
+      {
+        "questionNo": 2,
+        "questionText": "“Technology made life easier but more complicated.”",
+        "options": {
+          "A": "agree…convenience but over-reliance harms deep thinking/communication",
+          "B": "perfect",
+          "C": "evil",
+          "D": "no comment"
+        },
+        "correctAnswer": "A",
+        "explanation": "It uses sophisticated language and evaluates both sides with a clear caution."
+      },
+      {
+        "questionNo": 3,
+        "questionText": "“Should HK promote more sustainable tourism?”",
+        "options": {
+          "A": "yes…protect environment + boost economy",
+          "B": "damage nature ok",
+          "C": "not important",
+          "D": "don’t care"
+        },
+        "correctAnswer": "A",
+        "explanation": "It supports the idea with a well-developed reason that covers environment and economy."
+      },
+      {
+        "questionNo": 4,
+        "questionText": "“Globalisation has more disadvantages than advantages.”",
+        "options": {
+          "A": "counter…financial hub though competition increases",
+          "B": "terrible",
+          "C": "agree",
+          "D": "no idea"
+        },
+        "correctAnswer": "A",
+        "explanation": "It gives an effective counter-argument and still admits a drawback, showing nuance."
+      },
+      {
+        "questionNo": 5,
+        "questionText": "“Young people today are too lazy.”",
+        "options": {
+          "A": "partly disagree…pressure but still strive",
+          "B": "all lazy",
+          "C": "old better",
+          "D": "no comment"
+        },
+        "correctAnswer": "A",
+        "explanation": "It avoids stereotyping and offers a balanced explanation supported by context."
+      },
+      {
+        "questionNo": 6,
+        "questionText": "“How can we improve English speaking effectively?”",
+        "options": {
+          "A": "regular practice: discussions/recording/videos with subtitles",
+          "B": "memorise vocab",
+          "C": "no need",
+          "D": "don’t know"
+        },
+        "correctAnswer": "A",
+        "explanation": "It provides multiple concrete methods and uses an organised, formal tone."
+      },
+      {
+        "questionNo": 7,
+        "questionText": "“Social media does more harm than good.”",
+        "options": {
+          "A": "risks exist but benefits when used wisely",
+          "B": "completely harmful",
+          "C": "agree",
+          "D": "no opinion"
+        },
+        "correctAnswer": "A",
+        "explanation": "It presents a balanced view and shows critical thinking by adding conditions (“used wisely”)."
+      },
+      {
+        "questionNo": 8,
+        "questionText": "“Traditional festivals are losing importance.”",
+        "options": {
+          "A": "partly true but revitalising preserves identity",
+          "B": "useless now",
+          "C": "old-fashioned",
+          "D": "no comment"
+        },
+        "correctAnswer": "A",
+        "explanation": "It acknowledges change and proposes a constructive solution linked to cultural identity."
+      },
+      {
+        "questionNo": 9,
+        "questionText": "“Biggest challenge facing HK students today?”",
+        "options": {
+          "A": "intense competition + bilingual demands",
+          "B": "none",
+          "C": "easy",
+          "D": "don’t know"
+        },
+        "correctAnswer": "A",
+        "explanation": "It synthesises two major pressures into a clear, formal answer."
+      },
+      {
+        "questionNo": 10,
+        "questionText": "“Ban all plastic bags immediately.”",
+        "options": {
+          "A": "gradual approach + education more practical",
+          "B": "ban everything now",
+          "C": "plastic fine",
+          "D": "no opinion"
+        },
+        "correctAnswer": "A",
+        "explanation": "It supports the goal but evaluates feasibility, offering a practical alternative."
+      },
+      {
+        "questionNo": 11,
+        "questionText": "“Reading books is outdated.”",
+        "options": {
+          "A": "disagree…deeper focus + language development",
+          "B": "yes outdated",
+          "C": "only phone",
+          "D": "no comment"
+        },
+        "correctAnswer": "A",
+        "explanation": "It argues respectfully and compares depth/quality of learning, not just preference."
+      },
+      {
+        "questionNo": 12,
+        "questionText": "“Focus more on economic growth than environmental protection.”",
+        "options": {
+          "A": "both important; sustainable development supports long-term growth",
+          "B": "economy first",
+          "C": "environment only",
+          "D": "no idea"
+        },
+        "correctAnswer": "A",
+        "explanation": "It avoids extremes and frames a long-term solution using a formal concept."
+      },
+      {
+        "questionNo": 13,
+        "questionText": "Opinion on AI in education.",
+        "options": {
+          "A": "personalise learning but not replace teachers",
+          "B": "replace all teachers",
+          "C": "useless",
+          "D": "no comment"
+        },
+        "correctAnswer": "A",
+        "explanation": "It recognises benefits while setting appropriate limits, showing balanced judgment."
+      },
+      {
+        "questionNo": 14,
+        "questionText": "“Living in HK is more difficult for young people.”",
+        "options": {
+          "A": "agree…housing/competition but opportunities remain",
+          "B": "impossible",
+          "C": "should leave",
+          "D": "no opinion"
+        },
+        "correctAnswer": "A",
+        "explanation": "It empathises and gives specific reasons, then adds a balanced hopeful point."
+      },
+      {
+        "questionNo": 15,
+        "questionText": "“More liberal studies or more STEM?”",
+        "options": {
+          "A": "balanced curriculum: critical thinking + practical skills",
+          "B": "only STEM",
+          "C": "only LS",
+          "D": "no comment"
+        },
+        "correctAnswer": "A",
+        "explanation": "It gives a well-supported, balanced stance and explains the value of both areas."
+      },
+      {
+        "questionNo": 16,
+        "questionText": "“How do you see your future after HKDSE?”",
+        "options": {
+          "A": "university + contribute long term",
+          "B": "no plan",
+          "C": "do nothing",
+          "D": "uncertain"
+        },
+        "correctAnswer": "C",
+        "explanation": "B can’t do 6, but proposes 7."
+      }
+    ]
+  },
+  {
+    "setId": "fd88ba18-6cab-4858-a34c-6e22d3096723",
+    "title": "DSE Speaking Medium",
+    "subject": "speaking",
+    "difficulty": "Medium",
+    "xpReward": 80,
+    "goldReward": 35,
+    "questionCount": 17,
+    "questions": [
+      {
+        "questionNo": 1,
+        "questionText": "“Social media is a complete waste of time.”",
+        "options": {
+          "A": "disagree…stay connected/learn info",
+          "B": "totally wrong",
+          "C": "agree 100%",
+          "D": "no comment"
+        },
+        "correctAnswer": "A",
+        "explanation": "It disagrees politely and supports the view with clear reasons."
+      },
+      {
+        "questionNo": 2,
+        "questionText": "“Hong Kong is too crowded. I want to move.”",
+        "options": {
+          "A": "understand…but opportunities/transport",
+          "B": "worst place",
+          "C": "go now",
+          "D": "don’t care"
+        },
+        "correctAnswer": "A",
+        "explanation": "It shows empathy while presenting a balanced counterpoint."
+      },
+      {
+        "questionNo": 3,
+        "questionText": "“Should students do more homework?”",
+        "options": {
+          "A": "moderate useful but too much stress",
+          "B": "yes more",
+          "C": "none",
+          "D": "useless"
+        },
+        "correctAnswer": "A",
+        "explanation": "It gives a nuanced opinion by recognising both benefits and drawbacks."
+      },
+      {
+        "questionNo": 4,
+        "questionText": "“The MTR is the best transport.”",
+        "options": {
+          "A": "agree…fast/reliable/air-conditioned",
+          "B": "buses better",
+          "C": "hate MTR",
+          "D": "no opinion"
+        },
+        "correctAnswer": "A",
+        "explanation": "It agrees and provides specific supporting reasons."
+      },
+      {
+        "questionNo": 5,
+        "questionText": "“English is too difficult to learn.”",
+        "options": {
+          "A": "challenging but daily practice helps",
+          "B": "impossible",
+          "C": "give up",
+          "D": "don’t study"
+        },
+        "correctAnswer": "A",
+        "explanation": "It encourages the speaker and offers practical advice."
+      },
+      {
+        "questionNo": 6,
+        "questionText": "“Video games are better than reading books.”",
+        "options": {
+          "A": "partly agree but reading improves vocab/imagination",
+          "B": "books boring",
+          "C": "games bad",
+          "D": "no idea"
+        },
+        "correctAnswer": "A",
+        "explanation": "It responds respectfully and gives a balanced comparison with reasons."
+      },
+      {
+        "questionNo": 7,
+        "questionText": "“Advantages of living in Hong Kong?”",
+        "options": {
+          "A": "transport + multicultural food",
+          "B": "none",
+          "C": "too hot",
+          "D": "want to leave"
+        },
+        "correctAnswer": "A",
+        "explanation": "It answers directly and includes two relevant, concrete advantages."
+      },
+      {
+        "questionNo": 8,
+        "questionText": "“Typhoon signal No.8 is coming. What should we do?”",
+        "options": {
+          "A": "stay indoors + prepare food/water",
+          "B": "go out",
+          "C": "nothing",
+          "D": "don’t know"
+        },
+        "correctAnswer": "A",
+        "explanation": "It gives sensible safety advice and a clear action plan."
+      },
+      {
+        "questionNo": 9,
+        "questionText": "“Dim sum is the best Hong Kong food.”",
+        "options": {
+          "A": "agree…tasty + family time",
+          "B": "western better",
+          "C": "hate dim sum",
+          "D": "whatever"
+        },
+        "correctAnswer": "A",
+        "explanation": "It agrees and extends the idea with an extra meaningful reason."
+      },
+      {
+        "questionNo": 10,
+        "questionText": "“Studying for HKDSE is too stressful.”",
+        "options": {
+          "A": "stressful but time management/exercise help",
+          "B": "stop complaining",
+          "C": "not stressful",
+          "D": "never study"
+        },
+        "correctAnswer": "A",
+        "explanation": "It validates the feeling and suggests helpful coping strategies."
+      },
+      {
+        "questionNo": 11,
+        "questionText": "“Should we use more English in daily life?”",
+        "options": {
+          "A": "yes…confidence in speaking exam",
+          "B": "no",
+          "C": "useless",
+          "D": "no comment"
+        },
+        "correctAnswer": "A",
+        "explanation": "It gives a clear opinion and links it to a practical benefit."
+      },
+      {
+        "questionNo": 12,
+        "questionText": "“How can we protect the environment in Hong Kong?”",
+        "options": {
+          "A": "use less plastic + recycle",
+          "B": "no need",
+          "C": "government only",
+          "D": "don’t know"
+        },
+        "correctAnswer": "A",
+        "explanation": "It provides realistic actions that individuals can do."
+      },
+      {
+        "questionNo": 13,
+        "questionText": "“The Peak is too touristy now.”",
+        "options": {
+          "A": "true but view still amazing at night",
+          "B": "never go again",
+          "C": "hate tourists",
+          "D": "no opinion"
+        },
+        "correctAnswer": "A",
+        "explanation": "It acknowledges the point but adds a positive counterpoint, showing balance."
+      },
+      {
+        "questionNo": 14,
+        "questionText": "“Online learning is better than going to school.”",
+        "options": {
+          "A": "face-to-face helps interaction",
+          "B": "perfect online",
+          "C": "school useless",
+          "D": "no idea"
+        },
+        "correctAnswer": "A",
+        "explanation": "It gives a reasonable counter-argument focused on interaction and learning quality."
+      },
+      {
+        "questionNo": 15,
+        "questionText": "“What do you usually do on weekends?”",
+        "options": {
+          "A": "revision + hiking",
+          "B": "sleep all day",
+          "C": "games only",
+          "D": "nothing"
+        },
+        "correctAnswer": "A",
+        "explanation": "It answers with specific details, showing good ability to elaborate."
+      },
+      {
+        "questionNo": 16,
+        "questionText": "“Hong Kong needs more green spaces.”",
+        "options": {
+          "A": "strongly agree…reduce stress",
+          "B": "need malls",
+          "C": "useless",
+          "D": "no comment"
+        },
+        "correctAnswer": "A",
+        "explanation": "It agrees and supports the claim with a clear benefit."
+      },
+      {
+        "questionNo": 17,
+        "questionText": "“One thing you learned from today’s English lesson?”",
+        "options": {
+          "A": "linking words however/therefore",
+          "B": "nothing",
+          "C": "forgot",
+          "D": "boring"
+        },
+        "correctAnswer": "A",
+        "explanation": "It gives a specific learning point with examples, which sounds thoughtful."
+      }
+    ]
+  },
+  {
+    "setId": "39050aef-0d88-49c6-8326-0d006aa57e30",
+    "title": "DSE Writing Easy",
+    "subject": "writing",
+    "difficulty": "Easy",
+    "xpReward": 60,
+    "goldReward": 25,
+    "questionCount": 17,
+    "questions": [
+      {
+        "questionNo": 1,
+        "questionText": "Choose the correct sentence for a formal email.",
+        "options": {
+          "A": "Hi…",
+          "B": "Dear Sir…apply…",
+          "C": "Yo…",
+          "D": "Send me money"
+        },
+        "correctAnswer": "B",
+        "explanation": "“Dear Sir… I am writing to apply…” is formal and polite."
+      },
+      {
+        "questionNo": 2,
+        "questionText": "“I _____ to school by MTR every day.”",
+        "options": {
+          "A": "go",
+          "B": "goes",
+          "C": "went",
+          "D": "going"
+        },
+        "correctAnswer": "A",
+        "explanation": "Subject “I” takes base verb go in present simple."
+      },
+      {
+        "questionNo": 3,
+        "questionText": "Correct: “She don’t like English class.”",
+        "options": {
+          "A": "She don’t",
+          "B": "She doesn’t",
+          "C": "She no like",
+          "D": "She not like"
+        },
+        "correctAnswer": "B",
+        "explanation": "Third person singular uses doesn’t."
+      },
+      {
+        "questionNo": 4,
+        "questionText": "Best topic sentence about Hong Kong food.",
+        "options": {
+          "A": "buildings",
+          "B": "famous for dim sum/street food",
+          "C": "weather",
+          "D": "students"
+        },
+        "correctAnswer": "B",
+        "explanation": "It introduces the paragraph topic: HK food."
+      },
+      {
+        "questionNo": 5,
+        "questionText": "“The Peak offers _____ views…”",
+        "options": {
+          "A": "bad",
+          "B": "beautiful",
+          "C": "boring",
+          "D": "small"
+        },
+        "correctAnswer": "B",
+        "explanation": "Collocation: beautiful views."
+      },
+      {
+        "questionNo": 6,
+        "questionText": "Which is a complete sentence?",
+        "options": {
+          "A": "Running…",
+          "B": "I run…",
+          "C": "To the MTR…",
+          "D": "MTR fast running"
+        },
+        "correctAnswer": "B",
+        "explanation": "It has a subject + verb and is complete."
+      },
+      {
+        "questionNo": 7,
+        "questionText": "Polite way to ask for help.",
+        "options": {
+          "A": "Give me…",
+          "B": "Could you please…",
+          "C": "Hurry up",
+          "D": "I need it"
+        },
+        "correctAnswer": "B",
+        "explanation": "“Could you please…” is polite."
+      },
+      {
+        "questionNo": 8,
+        "questionText": "Correct spelling: “peaple”",
+        "options": {
+          "A": "peaple",
+          "B": "people",
+          "C": "peple",
+          "D": "peeple"
+        },
+        "correctAnswer": "B",
+        "explanation": "Correct spelling is people."
+      },
+      {
+        "questionNo": 9,
+        "questionText": "Best concluding sentence for studying English.",
+        "options": {
+          "A": "useless",
+          "B": "opens doors",
+          "C": "hate",
+          "D": "no one needs"
+        },
+        "correctAnswer": "B",
+        "explanation": "A conclusion should sum up positively with a key point."
+      },
+      {
+        "questionNo": 10,
+        "questionText": "Synonym for “happy”: “I feel _____ after passing the test.”",
+        "options": {
+          "A": "sad",
+          "B": "joyful",
+          "C": "angry",
+          "D": "tired"
+        },
+        "correctAnswer": "B",
+        "explanation": "Joyful means happy."
+      },
+      {
+        "questionNo": 11,
+        "questionText": "“I live _____ Hong Kong Island.”",
+        "options": {
+          "A": "in",
+          "B": "on",
+          "C": "at",
+          "D": "to"
+        },
+        "correctAnswer": "B",
+        "explanation": "For islands, we say on (on Hong Kong Island)."
+      },
+      {
+        "questionNo": 12,
+        "questionText": "Best story beginning.",
+        "options": {
+          "A": "One day…",
+          "B": "Late student",
+          "C": "Woke up",
+          "D": "Student late"
+        },
+        "correctAnswer": "A",
+        "explanation": "It’s a complete, natural opening sentence."
+      },
+      {
+        "questionNo": 13,
+        "questionText": "“Students should _____ hard…”",
+        "options": {
+          "A": "study",
+          "B": "studies",
+          "C": "studied",
+          "D": "studying"
+        },
+        "correctAnswer": "A",
+        "explanation": "After “should” use base verb: study."
+      },
+      {
+        "questionNo": 14,
+        "questionText": "Which is formal language?",
+        "options": {
+          "A": "Wanna…",
+          "B": "Would you like…",
+          "C": "chill",
+          "D": "See ya"
+        },
+        "correctAnswer": "B",
+        "explanation": "“Would you like…” is formal/polite."
+      },
+      {
+        "questionNo": 15,
+        "questionText": "Correct: “There is many tourists…”",
+        "options": {
+          "A": "is many",
+          "B": "are many",
+          "C": "is much",
+          "D": "are much"
+        },
+        "correctAnswer": "B",
+        "explanation": "Plural noun “tourists” needs are."
+      },
+      {
+        "questionNo": 16,
+        "questionText": "“I like dim sum _____ it is delicious.”",
+        "options": {
+          "A": "but",
+          "B": "because",
+          "C": "however",
+          "D": "although"
+        },
+        "correctAnswer": "B",
+        "explanation": "“Because” gives the reason."
+      },
+      {
+        "questionNo": 17,
+        "questionText": "Best word: “The view from the Peak is _____.”",
+        "options": {
+          "A": "terrible",
+          "B": "breathtaking",
+          "C": "ugly",
+          "D": "small"
+        },
+        "correctAnswer": "B",
+        "explanation": "“Breathtaking” is strong positive description for a view."
+      }
+    ]
+  },
+  {
+    "setId": "65b65bb7-a444-46d8-a2b0-73b24883baba",
+    "title": "DSE Writing Hard",
+    "subject": "writing",
+    "difficulty": "Hard",
+    "xpReward": 120,
+    "goldReward": 50,
+    "questionCount": 16,
+    "questions": [
+      {
+        "questionNo": 1,
+        "questionText": "Sophisticated language sentence?",
+        "options": {
+          "A": "city is busy",
+          "B": "dynamic urban landscape…",
+          "C": "It is good",
+          "D": "I like it"
+        },
+        "correctAnswer": "B",
+        "explanation": "It uses more advanced vocabulary and complex structure."
+      },
+      {
+        "questionNo": 2,
+        "questionText": "Flaw: “In my opinion, I think… you know.”",
+        "options": {
+          "A": "Too informal and repetitive",
+          "B": "Perfect",
+          "C": "Too short",
+          "D": "No opinion"
+        },
+        "correctAnswer": "A",
+        "explanation": "“In my opinion/I think” repeats; “you know” is too informal."
+      },
+      {
+        "questionNo": 3,
+        "questionText": "“Brain drain _____ Hong Kong’s talent pool.”",
+        "options": {
+          "A": "depletes",
+          "B": "increases",
+          "C": "ignores",
+          "D": "celebrates"
+        },
+        "correctAnswer": "A",
+        "explanation": "Brain drain reduces available talent = depletes."
+      },
+      {
+        "questionNo": 4,
+        "questionText": "“Not only does technology aid learning, _____ it can also distract…”",
+        "options": {
+          "A": "but",
+          "B": "and",
+          "C": "so",
+          "D": "or"
+        },
+        "correctAnswer": "A",
+        "explanation": "Pattern is “not only… but also…”"
+      },
+      {
+        "questionNo": 5,
+        "questionText": "Error: “Despite of the difficulties…”",
+        "options": {
+          "A": "Despite of",
+          "B": "Despite",
+          "C": "In spite",
+          "D": "No error"
+        },
+        "correctAnswer": "A",
+        "explanation": "Correct is despite (no “of”) or “in spite of.”"
+      },
+      {
+        "questionNo": 6,
+        "questionText": "Best thesis statement: “This essay argues that _____.”",
+        "options": {
+          "A": "social media has more disadvantages…",
+          "B": "food is nice",
+          "C": "sleep now",
+          "D": "end"
+        },
+        "correctAnswer": "A",
+        "explanation": "A thesis must be specific and arguable."
+      },
+      {
+        "questionNo": 7,
+        "questionText": "“The government’s _____ approach…”",
+        "options": {
+          "A": "proactive",
+          "B": "lazy",
+          "C": "slow",
+          "D": "happy"
+        },
+        "correctAnswer": "A",
+        "explanation": "“Proactive approach” is standard academic collocation."
+      },
+      {
+        "questionNo": 8,
+        "questionText": "“Globalisation offers benefits; _____, cultural erosion remains…”",
+        "options": {
+          "A": "however",
+          "B": "and",
+          "C": "so",
+          "D": "because"
+        },
+        "correctAnswer": "A",
+        "explanation": "“However” marks contrast."
+      },
+      {
+        "questionNo": 9,
+        "questionText": "“It is imperative that students _____ English regularly.”",
+        "options": {
+          "A": "practise",
+          "B": "ignore",
+          "C": "forget",
+          "D": "hate"
+        },
+        "correctAnswer": "A",
+        "explanation": "“Imperative that” calls for an action: practise."
+      },
+      {
+        "questionNo": 10,
+        "questionText": "Counter-argument: “While some claim technology isolates people, _____.”",
+        "options": {
+          "A": "it connects them…",
+          "B": "it is bad",
+          "C": "no one uses it",
+          "D": "end"
+        },
+        "correctAnswer": "A",
+        "explanation": "It directly rebuts with a plausible opposite point."
+      },
+      {
+        "questionNo": 11,
+        "questionText": "“students whom study hard” correction?",
+        "options": {
+          "A": "whom",
+          "B": "who",
+          "C": "which",
+          "D": "No error"
+        },
+        "correctAnswer": "B",
+        "explanation": "For subject of the clause, use who (not whom)."
+      },
+      {
+        "questionNo": 12,
+        "questionText": "“Ultimately, fostering bilingualism will _____ HK’s competitiveness.”",
+        "options": {
+          "A": "enhance",
+          "B": "reduce",
+          "C": "ignore",
+          "D": "destroy"
+        },
+        "correctAnswer": "A",
+        "explanation": "Bilingualism would improve/enhance competitiveness."
+      },
+      {
+        "questionNo": 13,
+        "questionText": "“Although progress has been made, much remains…” tone?",
+        "options": {
+          "A": "Balanced and realistic",
+          "B": "Extremely negative",
+          "C": "Overly positive",
+          "D": "No opinion"
+        },
+        "correctAnswer": "A",
+        "explanation": "It acknowledges progress but notes more work = balanced."
+      },
+      {
+        "questionNo": 14,
+        "questionText": "“The _____ of urban planning…”",
+        "options": {
+          "A": "intricacies",
+          "B": "simplicity",
+          "C": "ease",
+          "D": "fun"
+        },
+        "correctAnswer": "A",
+        "explanation": "“Intricacies” means complex details."
+      },
+      {
+        "questionNo": 15,
+        "questionText": "“It is undeniable that _____.”",
+        "options": {
+          "A": "investing in education yields benefits",
+          "B": "games are fun",
+          "C": "sleep",
+          "D": "food"
+        },
+        "correctAnswer": "A",
+        "explanation": "It’s a strong persuasive claim appropriate to formal writing."
+      },
+      {
+        "questionNo": 16,
+        "questionText": "Error in formal register: “Kids… mad pressure… innit?”",
+        "options": {
+          "A": "Too informal slang",
+          "B": "Perfect formal",
+          "C": "Too short",
+          "D": "No error"
+        },
+        "correctAnswer": "A",
+        "explanation": "Slang (“mad,” “innit”) is not formal."
+      }
+    ]
+  },
+  {
+    "setId": "0cddeb63-966c-4db5-a71f-5814b484086c",
+    "title": "DSE Writing Medium",
+    "subject": "writing",
+    "difficulty": "Medium",
+    "xpReward": 80,
+    "goldReward": 35,
+    "questionCount": 17,
+    "questions": [
+      {
+        "questionNo": 1,
+        "questionText": "“Hong Kong is crowded. _____, it has many parks.”",
+        "options": {
+          "A": "However",
+          "B": "Because",
+          "C": "And",
+          "D": "So"
+        },
+        "correctAnswer": "A",
+        "explanation": "“However” shows contrast."
+      },
+      {
+        "questionNo": 2,
+        "questionText": "“The government is _____ new laws…”",
+        "options": {
+          "A": "introducing",
+          "B": "eating",
+          "C": "sleeping",
+          "D": "playing"
+        },
+        "correctAnswer": "A",
+        "explanation": "Governments introduce laws."
+      },
+      {
+        "questionNo": 3,
+        "questionText": "Error: “Although the exam was difficult, but I passed it.”",
+        "options": {
+          "A": "Although...but",
+          "B": "Although...and",
+          "C": "Although...so",
+          "D": "No error"
+        },
+        "correctAnswer": "A",
+        "explanation": "Don’t use although and but together."
+      },
+      {
+        "questionNo": 4,
+        "questionText": "“In my opinion, _____.”",
+        "options": {
+          "A": "everyone must agree",
+          "B": "studying English is essential…",
+          "C": "I hate it",
+          "D": "No one cares"
+        },
+        "correctAnswer": "B",
+        "explanation": "It states a clear, appropriate opinion."
+      },
+      {
+        "questionNo": 5,
+        "questionText": "“I woke up late. _____ I missed the bus.”",
+        "options": {
+          "A": "Therefore",
+          "B": "Although",
+          "C": "But",
+          "D": "And"
+        },
+        "correctAnswer": "A",
+        "explanation": "“Therefore” shows result."
+      },
+      {
+        "questionNo": 6,
+        "questionText": "“The _____ of the city makes it exciting but stressful.”",
+        "options": {
+          "A": "pace",
+          "B": "slowness",
+          "C": "quiet",
+          "D": "emptiness"
+        },
+        "correctAnswer": "A",
+        "explanation": "“Fast pace” commonly causes excitement and stress."
+      },
+      {
+        "questionNo": 7,
+        "questionText": "“Hong Kong has excellent public transport. _____”",
+        "options": {
+          "A": "The MTR is fast and reliable",
+          "B": "I like food",
+          "C": "It rains a lot",
+          "D": "Schools are good"
+        },
+        "correctAnswer": "A",
+        "explanation": "It supports the topic with a relevant example."
+      },
+      {
+        "questionNo": 8,
+        "questionText": "Correct: “Because it was raining, so we stayed home.”",
+        "options": {
+          "A": "Because...so",
+          "B": "Because...we stayed home",
+          "C": "It was raining so we stayed",
+          "D": "No error"
+        },
+        "correctAnswer": "B",
+        "explanation": "Use because without “so” in the same clause."
+      },
+      {
+        "questionNo": 9,
+        "questionText": "“It is widely believed that _____.”",
+        "options": {
+          "A": "HKDSE is too hard",
+          "B": "English proficiency enhances job opportunities",
+          "C": "Games are better",
+          "D": "Sleep is important"
+        },
+        "correctAnswer": "B",
+        "explanation": "It fits an objective, academic tone."
+      },
+      {
+        "questionNo": 10,
+        "questionText": "“The policy aims to _____ social inequality.”",
+        "options": {
+          "A": "reduce",
+          "B": "increase",
+          "C": "ignore",
+          "D": "celebrate"
+        },
+        "correctAnswer": "A",
+        "explanation": "Policies aim to reduce inequality."
+      },
+      {
+        "questionNo": 11,
+        "questionText": "“Hong Kong is modern. _____, some traditions remain.”",
+        "options": {
+          "A": "Nevertheless",
+          "B": "Therefore",
+          "C": "Because",
+          "D": "So"
+        },
+        "correctAnswer": "A",
+        "explanation": "“Nevertheless” signals contrast."
+      },
+      {
+        "questionNo": 12,
+        "questionText": "“In conclusion, _____.”",
+        "options": {
+          "A": "students should practise…",
+          "B": "the end",
+          "C": "I don’t know",
+          "D": "Bye"
+        },
+        "correctAnswer": "A",
+        "explanation": "It’s a proper conclusion statement."
+      },
+      {
+        "questionNo": 13,
+        "questionText": "“The typhoon caused significant _____…”",
+        "options": {
+          "A": "damage",
+          "B": "fun",
+          "C": "happiness",
+          "D": "growth"
+        },
+        "correctAnswer": "A",
+        "explanation": "Typhoons cause damage."
+      },
+      {
+        "questionNo": 14,
+        "questionText": "Which shows good paragraph unity?",
+        "options": {
+          "A": "Same topic on environmental protection",
+          "B": "Jump topics",
+          "C": "No topic",
+          "D": "Random words"
+        },
+        "correctAnswer": "A",
+        "explanation": "Unity means all sentences stay on one topic."
+      },
+      {
+        "questionNo": 15,
+        "questionText": "“I firmly _____ that…”",
+        "options": {
+          "A": "believe",
+          "B": "eat",
+          "C": "run",
+          "D": "sleep"
+        },
+        "correctAnswer": "A",
+        "explanation": "Correct collocation: “firmly believe.”"
+      },
+      {
+        "questionNo": 16,
+        "questionText": "Parallel structure error: “Students like reading, to write and studying.”",
+        "options": {
+          "A": "to write",
+          "B": "writing",
+          "C": "write",
+          "D": "No error"
+        },
+        "correctAnswer": "B",
+        "explanation": "To match “reading… studying,” use writing."
+      },
+      {
+        "questionNo": 17,
+        "questionText": "“_____ heavy rain, the match was cancelled.”",
+        "options": {
+          "A": "Because of",
+          "B": "Although",
+          "C": "But",
+          "D": "However"
+        },
+        "correctAnswer": "A",
+        "explanation": "“Because of” + noun phrase shows cause."
+      }
+    ]
+  }
+]
