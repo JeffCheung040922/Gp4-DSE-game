@@ -16,7 +16,7 @@ export async function getStats(req: AuthRequest, res: Response) {
 
     const { data: gameHistory } = await supabaseAdmin
       .from('game_history')
-      .select('score, total_questions, xp_earned, accuracy')
+      .select('score, total_questions, xp_earned, accuracy, played_at')
       .eq('user_id', userId);
 
     const { data: userProgress } = await supabaseAdmin

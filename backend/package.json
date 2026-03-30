@@ -7,7 +7,7 @@
     "dev": "ts-node server.ts",
     "build": "NODE_OPTIONS='--max-old-space-size=2048' tsc",
     "start": "node dist/server.js",
-    "postinstall": "tsc"
+    "postinstall": "npm run build"
   },
   "dependencies": {
     "cors": "^2.8.5",
@@ -17,7 +17,8 @@
     "cookie-parser": "^1.4.6",
     "bcryptjs": "^2.4.3",
     "jsonwebtoken": "^9.0.2",
-    "@supabase/supabase-js": "^2.45.0"
+    "@supabase/supabase-js": "^2.45.0",
+    "typescript": "^5.5.4"
   },
   "devDependencies": {
     "@types/express": "^4.17.21",
@@ -26,7 +27,6 @@
     "@types/cookie-parser": "^1.4.7",
     "@types/bcryptjs": "^2.4.6",
     "@types/jsonwebtoken": "^9.0.6",
-    "typescript": "^5.5.4",
     "ts-node": "^10.9.2"
   },
   "engines": {
