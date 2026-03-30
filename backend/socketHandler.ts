@@ -1,8 +1,7 @@
 import { Server as SocketServer, Socket } from 'socket.io';
 import jwt from 'jsonwebtoken';
 import { supabaseAdmin } from './lib/supabase';
-
-const JWT_SECRET = process.env.JWT_SECRET || 'dev-secret';
+import { JWT_CONFIG } from './lib/jwtConfig';
 
 // Question interface for proper typing
 interface Question {
@@ -387,7 +386,7 @@ export function setupWebSocket(io: SocketServer) {
     }
 
     try {
-      const decoded = jwt.verify(token, JWT_SECRET) as { userId: string };
+      const decoded = jwt.verify(token, JWT_CONFIG.secret) as { userId: string };
       socket.data.userId = decoded.userId;
       next();
     } catch {

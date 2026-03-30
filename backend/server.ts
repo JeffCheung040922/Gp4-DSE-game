@@ -17,20 +17,53 @@ import { setupWebSocket } from './socketHandler';
 import { authMiddleware } from './middleware/authMiddleware';
 import { getBossTeaserInfo } from './controllers/dashboardController';
 
+// ─── Allow all Vercel preview/production URLs + local dev ────────────────────
+function getAllowedOrigins(): string[] {
+  const env = process.env.CLIENT_URL?.trim();
+  if (env) {
+    // Support comma-separated list in case you add more domains later
+    return env.split(',').map(s => s.trim()).filter(Boolean);
+  }
+  // Fallback for local development
+  return [
+    'http://localhost:5173',
+    'http://localhost:4173',
+    'https://localhost:5173',
+    'https://localhost:4173',
+  ];
+}
+
+const allowedOrigins = getAllowedOrigins();
+
 const app = express();
 const server = createServer(app);
 const io = new SocketServer(server, {
   cors: {
-    origin: process.env.CLIENT_URL || 'http://localhost:5173',
+    origin: (origin, callback) => {
+      // Allow requests with no origin (e.g. curl, mobile apps) and localhost in dev
+      if (!origin || allowedOrigins.includes(origin)) {
+        callback(null, true);
+      } else {
+        console.warn(`[CORS] Blocked origin: ${origin}`);
+        callback(new Error(`Origin ${origin} not allowed by CORS policy`));
+      }
+    },
     credentials: true,
   },
   transports: ['websocket', 'polling'],
 });
 
-const PORT = process.env.PORT || 5000;
+const PORT = Number(process.env.PORT) || 5000;
 
 app.use(cors({
-  origin: process.env.CLIENT_URL || 'http://localhost:5173',
+  origin: (origin, callback) => {
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      console.warn(`[CORS] Blocked HTTP origin: ${origin}`);
+      callback(new Error(`Origin ${origin} not allowed by CORS policy`));
+    }
+  },
   credentials: true,
 }));
 app.use(express.json());

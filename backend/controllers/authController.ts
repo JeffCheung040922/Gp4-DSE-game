@@ -1,17 +1,13 @@
 import { Request, Response } from 'express';
 import { randomUUID } from 'crypto';
 import jwt from 'jsonwebtoken';
-import bcrypt from 'bcrypt';
+import bcrypt from 'bcryptjs';
 import { promises as fs } from 'fs';
 import { dirname, join } from 'path';
-import { fileURLToPath } from 'url';
 import { supabaseAdmin } from '../lib/supabase';
+import { JWT_CONFIG } from '../lib/jwtConfig';
 import type { LoginRequest, RegisterRequest } from '../types';
 
-const JWT_SECRET = process.env.JWT_SECRET || 'dev-secret';
-
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = dirname(__filename);
 const PASSWORD_STORE_PATH = join(__dirname, '..', 'data', 'password-store.json');
 
 // Simple in-memory password store for testing (in production, use proper auth)
@@ -54,8 +50,8 @@ function generateGuestName(): string {
 function issueGuestToken(guestId: string, sessionToken: string): string {
   return jwt.sign(
     { userId: guestId, isGuest: true, sessionToken },
-    JWT_SECRET,
-    { expiresIn: '30d' }
+    JWT_CONFIG.secret,
+    { expiresIn: JWT_CONFIG.guestExpiresIn }
   )
 }
 
@@ -100,7 +96,7 @@ export async function login(req: Request, res: Response) {
     }
 
     // Generate JWT token
-    const token = jwt.sign({ userId: user.id, isGuest: false }, JWT_SECRET, { expiresIn: '7d' });
+    const token = jwt.sign({ userId: user.id, isGuest: false }, JWT_CONFIG.secret, { expiresIn: JWT_CONFIG.expiresIn });
 
     res.cookie('token', token, {
       httpOnly: true,
@@ -145,7 +141,7 @@ export async function register(req: Request, res: Response) {
       passwordStore.set(existingUser.id, seededHash);
       await persistPasswordStore();
 
-      const token = jwt.sign({ userId: existingUser.id, isGuest: false }, JWT_SECRET, { expiresIn: '7d' });
+      const token = jwt.sign({ userId: existingUser.id, isGuest: false }, JWT_CONFIG.secret, { expiresIn: JWT_CONFIG.expiresIn });
       res.cookie('token', token, {
         httpOnly: true,
         secure: process.env.NODE_ENV === 'production',
@@ -189,7 +185,7 @@ export async function register(req: Request, res: Response) {
     await persistPasswordStore();
 
     // Generate JWT token
-    const token = jwt.sign({ userId: newUser.id, isGuest: false }, JWT_SECRET, { expiresIn: '7d' });
+    const token = jwt.sign({ userId: newUser.id, isGuest: false }, JWT_CONFIG.secret, { expiresIn: JWT_CONFIG.expiresIn });
 
     res.cookie('token', token, {
       httpOnly: true,
@@ -347,7 +343,7 @@ export async function convertGuestToRegistered(req: Request, res: Response) {
 
     let decoded: { userId: string; isGuest: boolean }
     try {
-      decoded = jwt.verify(guestToken, JWT_SECRET) as { userId: string; isGuest: boolean }
+      decoded = jwt.verify(guestToken, JWT_CONFIG.secret) as { userId: string; isGuest: boolean }
     } catch {
       return res.status(401).json({ error: 'Invalid or expired session' })
     }
@@ -400,7 +396,7 @@ export async function convertGuestToRegistered(req: Request, res: Response) {
     await persistPasswordStore()
 
     // Issue a new non-guest JWT
-    const newToken = jwt.sign({ userId: guestId, isGuest: false }, JWT_SECRET, { expiresIn: '7d' })
+    const newToken = jwt.sign({ userId: guestId, isGuest: false }, JWT_CONFIG.secret, { expiresIn: JWT_CONFIG.expiresIn })
     res.cookie('token', newToken, {
       httpOnly: true,
       secure: process.env.NODE_ENV === 'production',
