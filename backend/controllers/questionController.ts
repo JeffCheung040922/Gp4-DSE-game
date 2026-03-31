@@ -151,18 +151,31 @@ export async function getRandomQuestions(req: AuthRequest, res: Response) {
   const count = Math.min(parseInt(String(req.query.count ?? '12'), 10), 50);
 
   try {
-    let query = supabaseAdmin
-      .from('questions')
-      .select('id, question_no, question_text, option_a, option_b, option_c, option_d, correct_answer, subject:question_sets(subject, difficulty)');
+    let setsQuery = supabaseAdmin.from('question_sets').select('id');
 
     if (subject) {
-      query = query.ilike('question_sets.subject', `%${subject}%`);
+      setsQuery = setsQuery.ilike('subject', `%${subject}%`);
     }
     if (difficulty) {
-      query = query.ilike('question_sets.difficulty', `%${difficulty}%`);
+      setsQuery = setsQuery.ilike('difficulty', `%${difficulty}%`);
     }
 
-    const { data: all, error } = await query;
+    const { data: sets, error: setsErr } = await setsQuery;
+
+    if (setsErr) {
+      console.error('getRandomQuestions sets error:', setsErr);
+      return res.status(500).json({ error: 'Failed to fetch questions' });
+    }
+
+    const setIds = (sets ?? []).map(s => s.id).filter(Boolean);
+    if (setIds.length === 0) {
+      return res.json([]);
+    }
+
+    const { data: all, error } = await supabaseAdmin
+      .from('questions')
+      .select('id, question_no, question_text, option_a, option_b, option_c, option_d, correct_answer')
+      .in('set_id', setIds);
 
     if (error) {
       console.error('getRandomQuestions error:', error);
@@ -173,7 +186,6 @@ export async function getRandomQuestions(req: AuthRequest, res: Response) {
       return res.json([]);
     }
 
-    // Fisher-Yates shuffle and take `count`
     const shuffled = [...all];
     for (let i = shuffled.length - 1; i > 0; i--) {
       const j = Math.floor(Math.random() * (i + 1));
@@ -197,7 +209,7 @@ export async function getRandomQuestions(req: AuthRequest, res: Response) {
 
 export async function submitAnswers(req: AuthRequest, res: Response) {
   const userId = req.userId!;
-  const { setId, subject, answers } = req.body as SubmitRequest;
+  const { setId, subject, answers, difficulty: bodyDifficulty, sessionTotal } = req.body as SubmitRequest;
 
   try {
     if (!subject || !answers) {
@@ -213,7 +225,7 @@ export async function submitAnswers(req: AuthRequest, res: Response) {
       option_c: string;
       option_d: string;
     }[] = [];
-    let difficulty = 'Easy';
+    let difficulty = bodyDifficulty || 'Easy';
 
     if (setId) {
       // Real set — load questions and save history
@@ -259,6 +271,8 @@ export async function submitAnswers(req: AuthRequest, res: Response) {
         return res.status(500).json({ error: 'Failed to process answers' });
       }
       questions = qs;
+    } else if (bodyDifficulty) {
+      difficulty = bodyDifficulty;
     }
 
     const battleValues = getBattleValues(difficulty);
@@ -304,6 +318,14 @@ export async function submitAnswers(req: AuthRequest, res: Response) {
     const actualXp = Math.round(correctCount * xpPerQuestion);
     const actualGold = Math.round(correctCount * goldPerQuestion);
 
+    const answerKeyCount = Object.keys(answers).length;
+    const randomSessionClosed =
+      !setId &&
+      typeof sessionTotal === 'number' &&
+      sessionTotal > 0 &&
+      answerKeyCount === sessionTotal &&
+      isSetComplete;
+
     if (setId && isSetComplete) {
       const { error: historyError } = await supabaseAdmin
         .from('game_history')
@@ -320,7 +342,9 @@ export async function submitAnswers(req: AuthRequest, res: Response) {
       if (historyError) {
         console.error('Insert game history error:', historyError);
       }
+    }
 
+    if ((setId && isSetComplete) || randomSessionClosed) {
       const { data: existingProgress } = await supabaseAdmin
         .from('user_progress')
         .select('total_questions_attempted, total_correct, accuracy_percentage')

@@ -2,42 +2,48 @@ import { useEffect, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import {
   BookOpen, Mic, Headphones, PenTool,
-  Flame, Trophy, ChevronRight, Star,
-  Swords, Zap, Users, RotateCcw, Calendar,
+  Flame, Trophy, ChevronRight,
+  Swords, Zap, Users, RotateCcw,
   Skull, UserPlus,
 } from 'lucide-react'
 import { CHARACTER_CLASSES } from '../types/character'
 import { getSavedCharacter } from '../hooks/useCharacter'
 import { useAuth, isGuestUser } from '../hooks/useAuth'
-import { fetchWeeklyStreak, fetchWrongQuestionsReview, fetchDashboardStats } from '../api/dashboard'
+import { fetchWrongQuestionsReview, fetchDashboardStats } from '../api/dashboard'
+import { getGuestWrongQuestionsReview } from '../api/guestData'
 import { fetchLiveBossTeaser } from '../api/teaser'
-import type { Subject, WeeklyStreak, WrongQuestionsReview, DashboardStats, LiveBossTeaser } from '../types/api'
+import type { Subject, WrongQuestionsReview, DashboardStats, LiveBossTeaser } from '../types/api'
 
 // ─── Subject cards ────────────────────────────────────────────────────────────
 const subjectCards = [
   {
-    path: '/listening', label: 'Listening', labelCn: '聆聽',
+    path: '/listening', label: 'Listening',
     desc: 'Paper 3 · Short answers & multiple choice',
     icon: Headphones, color: '#2563eb', bg: '#eff6ff', border: '#bfdbfe',
   },
   {
-    path: '/speaking', label: 'Speaking', labelCn: '說話',
+    path: '/speaking', label: 'Speaking',
     desc: 'Paper 4 · Role-play & group discussion',
     icon: Mic, color: '#059669', bg: '#ecfdf5', border: '#a7f3d0',
   },
   {
-    path: '/reading', label: 'Reading', labelCn: '閱讀',
+    path: '/reading', label: 'Reading',
     desc: 'Paper 1 · Comprehension & vocabulary',
     icon: BookOpen, color: '#d97706', bg: '#fffbeb', border: '#fde68a',
   },
   {
-    path: '/writing', label: 'Writing', labelCn: '寫作',
+    path: '/writing', label: 'Writing',
     desc: 'Paper 2 · Essays & formal letters',
     icon: PenTool, color: '#dc2626', bg: '#fff1f2', border: '#fecdd3',
   },
 ]
 
-const streakDays = [true, true, true, false, true, true, false]
+const EMPTY_WRONG_REVIEW = (): WrongQuestionsReview => ({
+  entries: (['listening', 'speaking', 'reading', 'writing'] as Subject[]).map(subject => ({
+    subject,
+    wrongCount: 0,
+  })),
+})
 
 const SUBJECT_LABEL: Record<Subject, string> = {
   listening: 'Listening',
@@ -60,36 +66,38 @@ export default function Dashboard() {
   const isGuest = isGuestUser(user)
   const savedChar = getSavedCharacter()
   const charClass = savedChar ? CHARACTER_CLASSES.find(c => c.id === savedChar.classId) : null
-  const [weeklyStreak, setWeeklyStreak] = useState<WeeklyStreak | null>(null)
-  const [wrongReview, setWrongReview] = useState<WrongQuestionsReview | null>(null)
+  const [wrongReview, setWrongReview] = useState<WrongQuestionsReview>(EMPTY_WRONG_REVIEW)
   const [stats, setStats] = useState<DashboardStats | null>(null)
   const [teaser, setTeaser] = useState<LiveBossTeaser | null>(null)
 
   useEffect(() => {
     let cancelled = false
     ;(async () => {
-      try {
-        const [ws, wr, st, ts] = await Promise.all([
-          fetchWeeklyStreak(),
-          fetchWrongQuestionsReview(),
-          fetchDashboardStats(),
-          fetchLiveBossTeaser(),
-        ])
-        if (cancelled) return
-        setWeeklyStreak(ws)
-        setWrongReview(wr)
-        setStats(st)
-        setTeaser(ts)
-      } catch (e) {
-        console.error(e)
+      const loadWrong = async (): Promise<WrongQuestionsReview> => {
+        if (isGuest) return getGuestWrongQuestionsReview()
+        try {
+          return await fetchWrongQuestionsReview()
+        } catch (e) {
+          console.error(e)
+          return EMPTY_WRONG_REVIEW()
+        }
       }
+
+      const [wrR, stR, tsR] = await Promise.allSettled([
+        loadWrong(),
+        fetchDashboardStats(),
+        fetchLiveBossTeaser(),
+      ])
+      if (cancelled) return
+      if (wrR.status === 'fulfilled') setWrongReview(wrR.value)
+      if (stR.status === 'fulfilled') setStats(stR.value)
+      else console.error(stR.status === 'rejected' ? stR.reason : 'stats failed')
+      if (tsR.status === 'fulfilled') setTeaser(tsR.value)
     })()
     return () => { cancelled = true }
-  }, [])
+  }, [isGuest])
 
-  const streakDaysEffective = weeklyStreak?.streakDays ?? streakDays
-  const streakCountEffective = weeklyStreak?.streakCount ?? stats?.longestStreak ?? null
-  const wrongEntries = wrongReview?.entries ?? []
+  const wrongEntries = wrongReview.entries
   const wrongTotal = wrongEntries.reduce((sum, e) => sum + (e.wrongCount ?? 0), 0)
   const daysToExam = 78
 
@@ -327,7 +335,6 @@ export default function Dashboard() {
                   <div className="flex-1">
                     <div className="flex items-baseline gap-2">
                       <span className="text-lg font-bold" style={{ color: '#1c1917' }}>{s.label}</span>
-                      <span className="text-sm font-semibold" style={{ color: s.color }}>{s.labelCn}</span>
                     </div>
                     <p className="text-xs mt-0.5" style={{ color: '#78716c' }}>{s.desc}</p>
                     {/* Progress from backend */}
@@ -356,137 +363,78 @@ export default function Dashboard() {
         </div>
       </section>
 
-      {/* ── Bottom Grid ───────────────────────────────────────────────────────── */}
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-5 animate-fade-up-4">
-
-        {/* Wrong queue + review */}
+      {/* ── Wrong Questions Review (full width) ─────────────────────────────── */}
+      <section className="animate-fade-up-4 max-w-4xl mx-auto w-full">
         <div
-          className="lg:col-span-2 rounded-[28px] p-5"
-          style={{ backgroundColor: 'rgba(255,250,241,0.88)', border: '1px solid rgba(111,78,55,0.10)', boxShadow: '0 18px 30px rgba(0,0,0,0.06), inset 0 1px 0 rgba(255,255,255,0.65)' }}
+          className="rounded-[28px] p-5 sm:p-6"
+          style={{
+            backgroundColor: 'rgba(255,250,241,0.88)',
+            border: '1px solid rgba(111,78,55,0.10)',
+            boxShadow: '0 18px 30px rgba(0,0,0,0.06), inset 0 1px 0 rgba(255,255,255,0.65)',
+          }}
         >
-          <div className="flex items-center justify-between mb-4">
+          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 mb-5">
             <div className="flex items-center gap-2">
-              <RotateCcw size={15} color="#dc2626" />
-              <h2 className="text-sm font-bold" style={{ color: '#1c1917' }}>Wrong Questions Review</h2>
+              <RotateCcw size={16} color="#dc2626" />
+              <h2 className="text-base font-bold" style={{ color: '#1c1917' }}>Wrong Questions Review</h2>
             </div>
             <span
-              className="text-xs px-2 py-1 rounded-full font-medium"
+              className="text-xs px-3 py-1.5 rounded-full font-semibold self-start sm:self-auto"
               style={{ backgroundColor: '#fff1f2', color: '#dc2626', border: '1px solid #fecdd3' }}
             >
-              {wrongReview ? `— ${wrongTotal} wrong` : '— pending'}
+              {wrongTotal} incorrect total · by subject
             </span>
           </div>
 
-          <div className="space-y-2">
-            {!wrongReview && (
-              // Placeholder rows
-              <>
-                {(['listening', 'speaking', 'reading', 'writing'] as Subject[]).map((subject) => (
-                  <div
-                    key={subject}
-                    className="flex items-center gap-3 p-3 rounded-xl"
-                    style={{ backgroundColor: 'rgba(255,255,255,0.56)', border: '1px solid rgba(111,78,55,0.08)' }}
-                  >
-                    <div className="w-1 h-10 rounded-full flex-shrink-0" style={{ backgroundColor: '#e8e0d8' }} />
-                    <div className="flex-1 space-y-1.5">
-                      <div className="h-3 w-48 rounded" style={{ backgroundColor: '#f0ece4' }} />
-                      <div className="h-2.5 w-28 rounded" style={{ backgroundColor: '#f5f3ef' }} />
-                    </div>
-                    <div className="h-5 w-14 rounded-full" style={{ backgroundColor: '#f5f3ef' }} />
-                  </div>
-                ))}
-              </>
-            )}
-            {wrongReview && (['listening', 'speaking', 'reading', 'writing'] as Subject[]).map((subject) => {
+          <div className="space-y-2.5">
+            {(['listening', 'speaking', 'reading', 'writing'] as Subject[]).map((subject) => {
               const entry = wrongEntries.find(e => e.subject === subject)
               const count = entry?.wrongCount ?? 0
               return (
                 <div
                   key={subject}
-                  className="flex items-center gap-3 p-3 rounded-xl"
+                  className="flex flex-col sm:flex-row sm:items-center gap-3 p-4 rounded-2xl"
                   style={{ backgroundColor: 'rgba(255,255,255,0.56)', border: '1px solid rgba(111,78,55,0.08)' }}
                 >
                   <div
-                    className="w-1 h-10 rounded-full flex-shrink-0"
+                    className="w-1 sm:w-1.5 min-h-[3rem] sm:min-h-0 sm:h-12 rounded-full flex-shrink-0 self-stretch sm:self-auto"
                     style={{ backgroundColor: SUBJECT_COLOR[subject] }}
                   />
-                  <div className="flex-1">
-                    <div className="flex items-baseline justify-between gap-3">
+                  <div className="flex-1 min-w-0">
+                    <div className="flex flex-wrap items-baseline justify-between gap-2">
                       <div className="text-sm font-bold" style={{ color: '#1c1917' }}>{SUBJECT_LABEL[subject]}</div>
-                      <div className="text-sm font-bold" style={{ color: SUBJECT_COLOR[subject], fontFamily: 'monospace' }}>
+                      <div className="text-lg font-bold tabular-nums" style={{ color: SUBJECT_COLOR[subject] }}>
                         {count}
+                        <span className="text-xs font-semibold ml-1.5 opacity-80">to review</span>
                       </div>
                     </div>
-                    <div className="text-xs mt-1" style={{ color: '#a8a29e' }}>
-                      wrong questions
-                    </div>
+                    <p className="text-xs mt-1 leading-relaxed" style={{ color: '#a8a29e' }}>
+                      {count === 0
+                        ? 'No missed questions recorded yet — keep practicing this paper.'
+                        : 'Based on your completed quiz sessions (attempted minus correct).'}
+                    </p>
                   </div>
+                  <Link
+                    to={`/${subject}`}
+                    className="inline-flex items-center justify-center gap-1 px-4 py-2 rounded-full text-xs font-bold no-underline flex-shrink-0 transition-opacity hover:opacity-85"
+                    style={{
+                      backgroundColor: `${SUBJECT_COLOR[subject]}14`,
+                      color: SUBJECT_COLOR[subject],
+                      border: `1px solid ${SUBJECT_COLOR[subject]}33`,
+                    }}
+                  >
+                    Open {SUBJECT_LABEL[subject]}
+                    <ChevronRight size={14} />
+                  </Link>
                 </div>
               )
             })}
           </div>
-          <p className="text-xs mt-3 text-center" style={{ color: '#a8a29e' }}>
-            {wrongReview ? 'Use these to review and improve.' : 'Wrong question data will be loaded from the backend'}
+          <p className="text-xs mt-4 text-center leading-relaxed" style={{ color: '#a8a29e' }}>
+            Finish a full random quiz to update counts. Guest progress is stored on this device only.
           </p>
         </div>
-
-        {/* Right column */}
-        <div className="space-y-4">
-
-          {/* Streak */}
-          <div
-            className="rounded-[28px] p-4"
-            style={{ backgroundColor: 'rgba(255,250,241,0.88)', border: '1px solid rgba(111,78,55,0.10)', boxShadow: '0 18px 30px rgba(0,0,0,0.06), inset 0 1px 0 rgba(255,255,255,0.65)' }}
-          >
-            <div className="flex items-center gap-2 mb-3">
-              <Calendar size={14} color="#d97706" />
-              <h3 className="text-sm font-bold" style={{ color: '#1c1917' }}>Weekly Streak</h3>
-              <span className="ml-auto text-xs font-bold" style={{ color: '#d97706' }}>
-                {streakCountEffective !== null ? `${streakCountEffective} days` : '— days'}
-              </span>
-            </div>
-            <div className="flex justify-between gap-1">
-              {['M', 'T', 'W', 'T', 'F', 'S', 'S'].map((d, i) => (
-                <div key={i} className="flex flex-col items-center gap-1">
-                  <div className="w-8 h-8 rounded-xl flex items-center justify-center text-sm"
-                    style={{ backgroundColor: streakDaysEffective[i] ? '#fffbeb' : '#faf9f7', border: `1px solid ${streakDaysEffective[i] ? '#fde68a' : '#f0ece4'}` }}>
-                    {streakDaysEffective[i] ? '🔥' : '·'}
-                  </div>
-                  <span className="text-xs" style={{ color: '#a8a29e' }}>{d}</span>
-                </div>
-              ))}
-            </div>
-          </div>
-
-          {/* Badges */}
-          <div
-            className="rounded-[28px] p-4"
-            style={{ backgroundColor: 'rgba(255,250,241,0.88)', border: '1px solid rgba(111,78,55,0.10)', boxShadow: '0 18px 30px rgba(0,0,0,0.06), inset 0 1px 0 rgba(255,255,255,0.65)' }}
-          >
-            <div className="flex items-center gap-2 mb-3">
-              <Star size={14} color="#d97706" />
-              <h3 className="text-sm font-bold" style={{ color: '#1c1917' }}>Achievements</h3>
-            </div>
-            <div className="grid grid-cols-3 gap-2">
-              {[
-                { emoji: '🎯', label: 'Sharp Shooter', earned: false },
-                { emoji: '📚', label: '50 Questions', earned: false },
-                { emoji: '🔥', label: '7-Day Streak', earned: false },
-                { emoji: '⚔️', label: 'Boss Slayer', earned: false },
-                { emoji: '🏆', label: 'Top 10%', earned: false },
-                { emoji: '✍️', label: 'Essay Master', earned: false },
-              ].map(b => (
-                <div key={b.label} className="flex flex-col items-center gap-1 p-2 rounded-xl text-center"
-                  style={{ backgroundColor: '#faf9f7', border: '1px solid #f0ece4', opacity: 0.45 }}>
-                  <span className="text-lg">{b.emoji}</span>
-                  <span className="text-xs leading-tight" style={{ color: '#78716c' }}>{b.label}</span>
-                </div>
-              ))}
-            </div>
-            <p className="text-xs mt-2 text-center" style={{ color: '#a8a29e' }}>Unlocked by backend progress</p>
-          </div>
-        </div>
-      </div>
+      </section>
     </div>
   )
 }

@@ -170,10 +170,19 @@ export async function register(req: Request, res: Response) {
       .single();
 
     if (error || !newUser) {
-      console.error('Register error:', error);
+      console.error('Register profile insert error:', JSON.stringify(error, null, 2));
       passwordStore.delete(userId);
       await persistPasswordStore();
-      return res.status(500).json({ error: 'Failed to register user' });
+
+      // Surface specific DB errors for developer clarity
+      const errMsg = error?.message ?? '';
+      if (errMsg.includes('duplicate key') || errMsg.includes('unique constraint')) {
+        return res.status(409).json({ error: 'Username already taken — please choose a different one' });
+      }
+      if (errMsg.includes('foreign key') || errMsg.includes('violates foreign key')) {
+        return res.status(500).json({ error: 'Database setup incomplete — ensure you have run the SQL migration (profiles table missing).' });
+      }
+      return res.status(500).json({ error: `Failed to register: ${errMsg || 'Unknown database error'}` });
     }
 
     await persistPasswordStore();

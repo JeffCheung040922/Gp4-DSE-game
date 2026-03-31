@@ -21,7 +21,7 @@ export default function Login() {
 
   const savedChar = getSavedCharacter()
 
-  // 已用帳號登入才跳過登入頁；訪客可留在此頁以登入／註冊
+  // Skip this page only when logged in with a full account; guests may stay to sign in or register
   if (user && !user.isGuest) {
     return <Navigate to="/character-select" replace />
   }
@@ -220,7 +220,7 @@ export default function Login() {
                   className="w-full mt-3 py-3 rounded-xl text-sm font-semibold transition-all hover:bg-sky-400/10"
                   style={{ background: 'transparent', color: '#38bdf8', border: '1px solid rgba(56,189,248,0.25)' }}
                 >
-                  以訪客繼續遊戲
+                  Continue as guest
                 </button>
               ) : (
                 <button

@@ -1,8 +1,41 @@
 import { Response } from 'express';
+import { randomUUID } from 'crypto';
 import { supabaseAdmin } from '../lib/supabase';
 import type { AuthRequest } from '../middleware/authMiddleware';
 import type { CreateRoomRequest, JoinRoomRequest } from '../types';
 import { createRoom as createRoomInSocket, getRoom as getSocketRoom } from '../socketHandler';
+
+/**
+ * Creates a minimal guest profile on-the-fly for unauthenticated users (e.g. entering Co-op without logging in).
+ * The profile is created with a random UUID and is_guest=true so it can be stored in rooms table FKs.
+ */
+async function ensureGuestProfile(playerName?: string): Promise<{ userId: string; name: string }> {
+  const guestId = randomUUID();
+  const guestName = playerName || `Guest_${guestId.slice(0, 6).toUpperCase()}`;
+
+  const { data, error } = await supabaseAdmin
+    .from('profiles')
+    .insert({
+      id: guestId,
+      username: `guest_${guestId.replace(/-/g, '').slice(0, 12)}`,
+      name: guestName,
+      avatar: 'knight',
+      level: 1,
+      xp: 0,
+      gold: 0,
+      is_guest: true,
+    })
+    .select('id, name')
+    .single();
+
+  if (error || !data) {
+    // Fallback: return a temporary guest ID so the room can still be created
+    console.error('[ensureGuestProfile] Guest profile insert failed:', error);
+    return { userId: `guest_${guestId.replace(/-/g, '').slice(0, 8)}`, name: guestName };
+  }
+
+  return { userId: data.id, name: data.name };
+}
 
 function normalizeSocketRoomResponse(roomCode: string, room: ReturnType<typeof getSocketRoom>) {
   if (!room) return null;
@@ -29,14 +62,16 @@ function normalizeSocketRoomResponse(roomCode: string, room: ReturnType<typeof g
 // getRoom(): Return room + players from database
 // Note: Also uses WebSocket handler for real-time updates
 export async function createRoom(req: AuthRequest, res: Response) {
-  const userId = req.userId;
+  let userId = req.userId;
   const { subject, difficulty, playerName, classId } = req.body as CreateRoomRequest;
 
   try {
-    // Validate required fields
+    // Unauthenticated users get a transient guest profile so rooms FKs remain valid
     if (!userId) {
-      return res.status(401).json({ error: 'Authentication required' });
+      const guest = await ensureGuestProfile(playerName);
+      userId = guest.userId;
     }
+
     if (!subject || !difficulty) {
       return res.status(400).json({ error: 'Subject and difficulty required' });
     }
@@ -103,14 +138,15 @@ export async function createRoom(req: AuthRequest, res: Response) {
 }
 
 export async function joinRoom(req: AuthRequest, res: Response) {
-  const userId = req.userId;
+  let userId = req.userId;
   const { roomCode, playerName, classId } = req.body as JoinRoomRequest;
 
   try {
-    // Validate required fields
     if (!userId) {
-      return res.status(401).json({ error: 'Authentication required' });
+      const guest = await ensureGuestProfile(playerName);
+      userId = guest.userId;
     }
+
     if (!roomCode) {
       return res.status(400).json({ error: 'Room code required' });
     }

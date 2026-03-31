@@ -5,12 +5,12 @@ import { useInventory } from '../hooks/useInventory'
 import { useAuth } from '../hooks/useAuth'
 
 const navItems = [
-  { path: '/listening', label: 'Listening', labelCn: '聆聽', icon: Headphones, color: '#2957c8' },
-  { path: '/speaking', label: 'Speaking', labelCn: '說話', icon: Mic, color: '#0f8a67' },
-  { path: '/reading', label: 'Reading', labelCn: '閱讀', icon: BookOpen, color: '#c77a1a' },
-  { path: '/writing', label: 'Writing', labelCn: '寫作', icon: PenTool, color: '#cb4b2f' },
-  { path: '/multiplayer', label: 'Co-op', labelCn: '聯機', icon: Users, color: '#8a4db8' },
-  { path: '/shop', label: 'Shop', labelCn: '商店', icon: ShoppingBag, color: '#a06a1b' },
+  { path: '/listening', label: 'Listening', icon: Headphones, color: '#2957c8' },
+  { path: '/speaking', label: 'Speaking', icon: Mic, color: '#0f8a67' },
+  { path: '/reading', label: 'Reading', icon: BookOpen, color: '#c77a1a' },
+  { path: '/writing', label: 'Writing', icon: PenTool, color: '#cb4b2f' },
+  { path: '/multiplayer', label: 'Co-op', icon: Users, color: '#8a4db8' },
+  { path: '/shop', label: 'Shop', icon: ShoppingBag, color: '#a06a1b' },
 ]
 
 export default function Navbar() {
@@ -117,7 +117,7 @@ export default function Navbar() {
                   }}
                 >
                   <LogIn size={14} />
-                  帳號登入
+                  Sign in
                 </NavLink>
               )}
               <div
@@ -180,7 +180,7 @@ export default function Navbar() {
                       }}
                     >
                       <LogIn size={14} />
-                      帳號登入
+                      Sign in
                     </NavLink>
                   )}
                   <NavLink
@@ -218,10 +218,7 @@ export default function Navbar() {
                       <div className="w-10 h-10 rounded-2xl flex items-center justify-center" style={{ background: `${item.color}14` }}>
                         <Icon size={18} />
                       </div>
-                      <div>
-                        <div className="font-semibold">{item.label}</div>
-                        <div className="text-sm opacity-65">{item.labelCn}</div>
-                      </div>
+                      <div className="font-semibold">{item.label}</div>
                     </NavLink>
                   )
                 })}

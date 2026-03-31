@@ -24,9 +24,13 @@ export interface UpdateCharacterRequest {
 }
 
 export interface SubmitRequest {
-  setId: string;
+  setId?: string;
   subject: Subject;
   answers: Record<string, string>;
+  /** Random-quiz mode: must match frontend difficulty for progress + battle scaling */
+  difficulty?: Difficulty;
+  /** When `Object.keys(answers).length === sessionTotal`, merge this session into user_progress */
+  sessionTotal?: number;
 }
 
 export interface CreateRoomRequest {

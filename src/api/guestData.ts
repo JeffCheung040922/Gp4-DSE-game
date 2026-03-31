@@ -41,6 +41,20 @@ export function getMockWrongQuestions(): WrongQuestionsReview {
   }
 }
 
+/** Wrong counts from local guest stats (attempted − correct per subject). */
+export function getGuestWrongQuestionsReview(): WrongQuestionsReview {
+  const progress = loadGuestProgress()
+  const subjects: Subject[] = ['listening', 'speaking', 'reading', 'writing']
+  return {
+    entries: subjects.map(subject => {
+      const stat = progress.subjectStats[subject]
+      const attempted = stat?.attempted ?? 0
+      const correct = stat?.correct ?? 0
+      return { subject, wrongCount: Math.max(0, attempted - correct) }
+    }),
+  }
+}
+
 // ── Guest wrong answer analysis ─────────────────────────────────────────────
 export function getMockWrongAnswerAnalysis(): WrongAnswerAnalysis {
   return {

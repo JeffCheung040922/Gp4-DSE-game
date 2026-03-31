@@ -10,15 +10,17 @@ import type { BossType } from './BattleWidget'
 import { getSavedCharacter } from '../hooks/useCharacter'
 import { CHARACTER_CLASSES } from '../types/character'
 import { fetchRandomQuestions, submitAnswers } from '../api/questions'
-import type { Subject, Question, AIAnalysis } from '../types/api'
+import { updateGuestProgressAfterQuiz } from '../api/guestData'
+import { useAuth, isGuestUser } from '../hooks/useAuth'
+import type { Subject, Question, AIAnalysis, SubmitResponse } from '../types/api'
 import type { Inventory } from '../types/inventory'
 
 // ─── Subject config ───────────────────────────────────────────────────────────
-const SUBJECT_CFG: Record<Subject, { label: string; labelCn: string; Icon: React.ComponentType<{ size?: number; color?: string }>; color: string; bg: string; border: string }> = {
-  listening: { label: 'Listening', labelCn: '聆聽', Icon: Headphones, color: '#2563eb', bg: '#eff6ff',  border: '#bfdbfe' },
-  speaking:  { label: 'Speaking',  labelCn: '說話', Icon: Mic,        color: '#059669', bg: '#ecfdf5',  border: '#a7f3d0' },
-  reading:   { label: 'Reading',   labelCn: '閱讀', Icon: BookOpen,   color: '#d97706', bg: '#fffbeb',  border: '#fde68a' },
-  writing:   { label: 'Writing',   labelCn: '寫作', Icon: PenTool,    color: '#dc2626', bg: '#fff1f2',  border: '#fecdd3' },
+const SUBJECT_CFG: Record<Subject, { label: string; Icon: React.ComponentType<{ size?: number; color?: string }>; color: string; bg: string; border: string }> = {
+  listening: { label: 'Listening', Icon: Headphones, color: '#2563eb', bg: '#eff6ff',  border: '#bfdbfe' },
+  speaking:  { label: 'Speaking',  Icon: Mic,        color: '#059669', bg: '#ecfdf5',  border: '#a7f3d0' },
+  reading:   { label: 'Reading',   Icon: BookOpen,   color: '#d97706', bg: '#fffbeb',  border: '#fde68a' },
+  writing:   { label: 'Writing',   Icon: PenTool,    color: '#dc2626', bg: '#fff1f2',  border: '#fecdd3' },
 }
 
 type Difficulty = 'Easy' | 'Medium' | 'Hard'
@@ -213,6 +215,8 @@ export default function QuizPage({ subject }: { subject: Subject }) {
   const [currentAnalysis, setCurrentAnalysis] = useState<AIExplanation | null>(null)
 
   const { addGold, syncInventory } = useInventory()
+  const { user } = useAuth()
+  const isGuest = isGuestUser(user)
   const battleRef = useRef<BossChallengeRef>(null)
 
   // ── Load random questions when difficulty changes ─────────────────────────
@@ -277,14 +281,19 @@ export default function QuizPage({ subject }: { subject: Subject }) {
 
     const nextAnswers = { ...answersSoFar, [q.id]: letter }
     setAnswersSoFar(nextAnswers)
+    const nextIdx = currentQIdx + 1
+    const sessionComplete = nextIdx >= questions.length
 
+    let submitResp: SubmitResponse | null = null
     try {
-      const resp = await submitAnswers({
+      submitResp = await submitAnswers({
         subject,
         answers: nextAnswers,
+        difficulty: selectedDifficulty,
+        ...(sessionComplete ? { sessionTotal: questions.length } : {}),
       })
-      updatedInventory = resp.updatedInventory
-      const r = resp.results.find(rr => rr.questionId === q.id) ?? resp.results[0]
+      updatedInventory = submitResp.updatedInventory
+      const r = submitResp.results.find(rr => rr.questionId === q.id) ?? submitResp.results[0]
 
       isCorrect = !!r?.isCorrect
       correct = r?.correctAnswer ?? 'A'
@@ -292,6 +301,17 @@ export default function QuizPage({ subject }: { subject: Subject }) {
       goldEarned = r?.goldEarned
       bossDamage = r?.bossDamage
       charDamage = r?.charDamage
+
+      if (sessionComplete && isGuest && submitResp) {
+        const correctTotal = submitResp.results.filter(rr => rr.isCorrect).length
+        updateGuestProgressAfterQuiz(
+          subject,
+          submitResp.total,
+          correctTotal,
+          submitResp.xpEarned,
+          submitResp.goldEarned,
+        )
+      }
     } catch (e) {
       console.error(e)
       isCorrect = false
@@ -321,7 +341,6 @@ export default function QuizPage({ subject }: { subject: Subject }) {
     setSessionResults(prev => [...prev, { correct: isCorrect, correctAnswer: normalizedCorrectAnswer }])
     battleRef.current?.triggerVerdict({ isCorrect, bossDamage, charDamage })
 
-    const nextIdx = currentQIdx + 1
     if (nextIdx >= questions.length) {
       setTimeout(() => battleRef.current?.resolveBattleEndByHealth(), 1200)
     }
@@ -394,7 +413,7 @@ export default function QuizPage({ subject }: { subject: Subject }) {
             </div>
             <div>
               <div className="text-sm font-bold" style={{ color: '#1c1917' }}>{cfg.label}</div>
-              <div className="text-xs font-mono-ui" style={{ color: 'rgba(111,78,55,0.50)', lineHeight: 1.3 }}>{cfg.labelCn} · DSE Paper</div>
+              <div className="text-xs font-mono-ui" style={{ color: 'rgba(111,78,55,0.50)', lineHeight: 1.3 }}>HKDSE English</div>
               {loadError && (
                 <div className="flex items-center gap-1 text-xs mt-0.5" style={{ color: '#cb4b2f' }}>
                   <FlaskConical size={10} /> {loadError}

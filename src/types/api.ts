@@ -50,6 +50,9 @@ export interface SubmitPayload {
   setId?: string
   subject: Subject
   answers: Record<string, string>       // { questionId: 'A' | 'B' | 'C' | 'D' }
+  difficulty?: 'Easy' | 'Medium' | 'Hard'
+  /** Last submit of a random quiz: must equal total questions in session */
+  sessionTotal?: number
 }
 
 // ─── Submit Response ──────────────────────────────────────────────────────────

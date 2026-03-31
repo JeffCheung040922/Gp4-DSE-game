@@ -123,22 +123,52 @@ export async function getStreak(req: AuthRequest, res: Response) {
   }
 }
 
+const DASHBOARD_SUBJECTS = ['listening', 'speaking', 'reading', 'writing'] as const;
+
+function canonicalSubject(raw: string): (typeof DASHBOARD_SUBJECTS)[number] | null {
+  const k = String(raw ?? '')
+    .toLowerCase()
+    .trim()
+    .replace(/\s+/g, '');
+  for (const s of DASHBOARD_SUBJECTS) {
+    if (k === s) return s;
+  }
+  return null;
+}
+
+/** Wrong review: total incorrect answers per subject (all difficulties combined). */
 export async function getWrongQuestions(req: AuthRequest, res: Response) {
   const userId = req.userId!;
 
   try {
-    const { data: wrongQuestions } = await supabaseAdmin
+    const { data: rows, error } = await supabaseAdmin
       .from('user_progress')
-      .select('subject, difficulty, total_questions_attempted, total_correct, accuracy_percentage')
-      .eq('user_id', userId)
-      .lt('accuracy_percentage', 50);
+      .select('subject, total_questions_attempted, total_correct')
+      .eq('user_id', userId);
 
-    const entries = (wrongQuestions || []).map(wq => ({
-      subject: wq.subject,
-      difficulty: wq.difficulty,
-      attempted: wq.total_questions_attempted,
-      correct: wq.total_correct,
-      accuracy: wq.accuracy_percentage,
+    if (error) {
+      console.error('Get wrong questions error:', error);
+      return res.status(500).json({ error: 'Failed to fetch wrong questions' });
+    }
+
+    const wrongBySubject: Record<(typeof DASHBOARD_SUBJECTS)[number], number> = {
+      listening: 0,
+      speaking: 0,
+      reading: 0,
+      writing: 0,
+    };
+
+    for (const row of rows || []) {
+      const sub = canonicalSubject(row.subject);
+      if (!sub) continue;
+      const attempted = row.total_questions_attempted ?? 0;
+      const correct = row.total_correct ?? 0;
+      wrongBySubject[sub] += Math.max(0, attempted - correct);
+    }
+
+    const entries = DASHBOARD_SUBJECTS.map(subject => ({
+      subject,
+      wrongCount: wrongBySubject[subject],
     }));
 
     return res.json({ entries });

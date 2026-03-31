@@ -14,7 +14,7 @@ import dashboardRoutes from './routes/dashboardRoutes';
 import roomRoutes from './routes/roomRoutes';
 import aiRoutes from './routes/aiRoutes';
 import { setupWebSocket } from './socketHandler';
-import { authMiddleware } from './middleware/authMiddleware';
+import { authMiddleware, optionalAuthMiddleware } from './middleware/authMiddleware';
 import { getBossTeaserInfo } from './controllers/dashboardController';
 
 // ─── Allow all Vercel preview/production URLs + local dev ────────────────────
@@ -78,7 +78,7 @@ app.use('/api/shop', shopRoutes);
 app.use('/api/dashboard', dashboardRoutes);
 app.use('/api/room', roomRoutes);
 app.use('/api/ai', aiRoutes);
-app.get('/api/live-boss-teaser', authMiddleware, getBossTeaserInfo);
+app.get('/api/live-boss-teaser', optionalAuthMiddleware, getBossTeaserInfo);
 
 setupWebSocket(io);
 
