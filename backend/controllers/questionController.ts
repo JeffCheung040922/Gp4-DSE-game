@@ -271,8 +271,6 @@ export async function submitAnswers(req: AuthRequest, res: Response) {
         return res.status(500).json({ error: 'Failed to process answers' });
       }
       questions = qs;
-    } else if (bodyDifficulty) {
-      difficulty = bodyDifficulty;
     }
 
     const battleValues = getBattleValues(difficulty);
