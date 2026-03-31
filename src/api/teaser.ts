@@ -1,8 +1,10 @@
 import axios from 'axios'
 import type { LiveBossTeaser } from '../types/api'
 
+import { getApiBaseUrl } from './apiBaseUrl'
+
 const api = axios.create({
-  baseURL: import.meta.env.VITE_API_URL ?? '/api',
+  baseURL: getApiBaseUrl(),
   timeout: 10_000,
   withCredentials: true,
 })
