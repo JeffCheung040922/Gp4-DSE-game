@@ -70,6 +70,7 @@ export interface SubmitResponse {
   score: number
   total: number
   xpEarned: number
+  goldEarned: number
   results: QuestionResult[]
   // If backend wants to be fully authoritative, it can return the updated inventory snapshot here.
   updatedInventory?: Inventory
