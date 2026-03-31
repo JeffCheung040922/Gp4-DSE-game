@@ -1,9 +1,6 @@
-# Railway: set this service’s Root Directory to `backend` (folder containing this file).
-# Do not use `cd backend` in Start Command when Root Directory is already `backend`.
-
 [build]
-builder = "nixpacks"
-buildCommand = "npm install && npm run build"
+builder = "dockerfile"
+dockerfilePath = "Dockerfile"
 
 [deploy]
-startCommand = "npm start"
+startCommand = "docker run app"
