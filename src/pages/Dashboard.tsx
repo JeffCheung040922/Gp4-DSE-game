@@ -1,18 +1,14 @@
 import { useEffect, useState } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import {
   BookOpen, Mic, Headphones, PenTool,
-  Flame, Trophy, ChevronRight, Star,
-  Swords, Zap, Users, RotateCcw, Calendar,
-  Skull, Brain, TrendingUp, AlertTriangle,
-  UserPlus,
+  Flame, Trophy, ChevronRight,
+  Skull, Users,
 } from 'lucide-react'
-import { CHARACTER_CLASSES } from '../types/character'
-import { getSavedCharacter } from '../hooks/useCharacter'
 import { useAuth, isGuestUser } from '../hooks/useAuth'
-import { fetchWeeklyStreak, fetchWrongQuestionsReview, fetchDashboardStats, fetchWrongAnswerAnalysis } from '../api/dashboard'
+import { fetchWeeklyStreak, fetchWrongQuestionsReview, fetchDashboardStats } from '../api/dashboard'
 import { fetchLiveBossTeaser } from '../api/teaser'
-import type { Subject, WeeklyStreak, WrongQuestionsReview, DashboardStats, LiveBossTeaser, WrongAnswerAnalysis } from '../types/api'
+import type { Subject, WeeklyStreak, WrongQuestionsReview, DashboardStats, LiveBossTeaser } from '../types/api'
 
 // ─── Subject cards ────────────────────────────────────────────────────────────
 const subjectCards = [
@@ -56,34 +52,28 @@ const SUBJECT_COLOR: Record<Subject, string> = {
 
 // ─── Dashboard ────────────────────────────────────────────────────────────────
 export default function Dashboard() {
-  const navigate = useNavigate()
   const { user } = useAuth()
   const isGuest = isGuestUser(user)
-  const savedChar = getSavedCharacter()
-  const charClass = savedChar ? CHARACTER_CLASSES.find(c => c.id === savedChar.classId) : null
   const [weeklyStreak, setWeeklyStreak] = useState<WeeklyStreak | null>(null)
   const [wrongReview, setWrongReview] = useState<WrongQuestionsReview | null>(null)
   const [stats, setStats] = useState<DashboardStats | null>(null)
   const [teaser, setTeaser] = useState<LiveBossTeaser | null>(null)
-  const [analysis, setAnalysis] = useState<WrongAnswerAnalysis | null>(null)
 
   useEffect(() => {
     let cancelled = false
     ;(async () => {
       try {
-        const [ws, wr, st, ts, wa] = await Promise.all([
+        const [ws, wr, st, ts] = await Promise.all([
           fetchWeeklyStreak(),
           fetchWrongQuestionsReview(),
           fetchDashboardStats(),
           fetchLiveBossTeaser(),
-          fetchWrongAnswerAnalysis(),
         ])
         if (cancelled) return
         setWeeklyStreak(ws)
         setWrongReview(wr)
         setStats(st)
         setTeaser(ts)
-        setAnalysis(wa)
       } catch (e) {
         console.error(e)
       }
@@ -228,121 +218,6 @@ export default function Dashboard() {
             </div>
           </div>
         </Link>
-      )}
-
-      {/* ── AI Learning Coach ──────────────────────────────────────────────────── */}
-      {analysis && (
-        <div
-          className="rounded-[28px] overflow-hidden transition-all animate-fade-up-1"
-          style={{
-            background: 'linear-gradient(135deg, #f0f4ff 0%, #e8f0fe 55%, #f3f0ff 100%)',
-            border: '1px solid rgba(99,102,241,0.18)',
-            boxShadow: '0 18px 32px rgba(99,102,241,0.10)',
-          }}
-        >
-          {/* Header */}
-          <div className="px-5 py-4 flex items-center gap-3" style={{ borderBottom: '1px solid rgba(99,102,241,0.12)' }}>
-            <div
-              className="w-10 h-10 rounded-2xl flex items-center justify-center"
-              style={{ backgroundColor: 'rgba(99,102,241,0.12)' }}
-            >
-              <Brain size={20} color="#6366f1" />
-            </div>
-            <div>
-              <div className="text-xs uppercase tracking-[0.18em] font-semibold" style={{ color: '#6366f1' }}>AI Learning Coach</div>
-              <div className="text-base font-bold" style={{ color: '#1c1917' }}>
-                {analysis.weakSubjects.length > 0
-                  ? `${SUBJECT_LABEL[analysis.weakSubjects[0].subject as Subject] ?? analysis.weakSubjects[0].subject} needs attention!`
-                  : 'Looking good — keep it up!'}
-              </div>
-            </div>
-            {analysis.weakSubjects.length > 0 && (
-              <div className="ml-auto flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-bold"
-                style={{ backgroundColor: 'rgba(239,68,68,0.10)', color: '#dc2626', border: '1px solid rgba(239,68,68,0.20)' }}>
-                <AlertTriangle size={12} /> {analysis.weakSubjects.length} weak area{analysis.weakSubjects.length > 1 ? 's' : ''}
-              </div>
-            )}
-          </div>
-
-          {/* Subject Accuracy Bars */}
-          <div className="px-5 py-4">
-            <div className="text-xs font-semibold mb-3" style={{ color: '#6366f1' }}>Your Accuracy by Subject</div>
-            <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
-              {(
-                analysis.summary.length > 0
-                  ? analysis.summary
-                  : (stats?.subjectStats ?? [])
-              ).map((item) => {
-                const subject = item.subject as Subject
-                const acc = Math.round(((item.accuracy ?? item.correctRate) ?? 0) * 100)
-                const isWeak = acc > 0 && acc < 60
-                const barColor = acc >= 80 ? '#22c55e' : acc >= 60 ? '#f59e0b' : isWeak ? '#ef4444' : '#6366f1'
-                return (
-                  <div key={subject} className="space-y-1.5">
-                    <div className="flex items-center justify-between">
-                      <span className="text-xs font-semibold capitalize" style={{ color: SUBJECT_COLOR[subject] }}>
-                        {SUBJECT_LABEL[subject]}
-                      </span>
-                      <span className="text-xs font-bold" style={{ color: barColor }}>
-                        {acc > 0 ? `${acc}%` : '—'}
-                      </span>
-                    </div>
-                    <div
-                      className="h-2 rounded-full overflow-hidden"
-                      style={{ backgroundColor: `${barColor}18` }}
-                    >
-                      <div
-                        className="h-full rounded-full transition-all duration-700"
-                        style={{ width: `${acc}%`, backgroundColor: barColor }}
-                      />
-                    </div>
-                  </div>
-                )
-              })}
-            </div>
-          </div>
-
-          {/* Improvement Tips */}
-          <div
-            className="px-5 py-4"
-            style={{ borderTop: '1px solid rgba(99,102,241,0.12)', backgroundColor: 'rgba(255,255,255,0.50)' }}
-          >
-            <div className="flex items-center gap-2 mb-2">
-              <TrendingUp size={13} color="#6366f1" />
-              <span className="text-xs font-semibold" style={{ color: '#6366f1' }}>Your Personalised Tips</span>
-            </div>
-            <div className="space-y-2">
-              {analysis.tips.split(' | ').map((tip, i) => (
-                <div key={i} className="flex items-start gap-2 text-sm" style={{ color: '#374151' }}>
-                  <span className="flex-shrink-0 mt-0.5 w-5 h-5 rounded-full flex items-center justify-center text-xs font-bold"
-                    style={{ backgroundColor: 'rgba(99,102,241,0.12)', color: '#6366f1' }}>
-                    {i + 1}
-                  </span>
-                  <span>{tip}</span>
-                </div>
-              ))}
-            </div>
-          </div>
-
-          {/* Action Button */}
-          {analysis.weakSubjects.length > 0 && (
-            <div className="px-5 pb-4">
-              <Link
-                to={`/${analysis.weakSubjects[0].subject}`}
-                className="flex items-center justify-center gap-2 w-full py-3 rounded-2xl text-sm font-bold transition-all hover:opacity-90"
-                style={{
-                  backgroundColor: '#6366f1',
-                  color: 'white',
-                  boxShadow: '0 8px 20px rgba(99,102,241,0.30)',
-                }}
-              >
-                <Swords size={14} />
-                Practice {SUBJECT_LABEL[analysis.weakSubjects[0].subject as Subject]} Now
-                <ChevronRight size={14} />
-              </Link>
-            </div>
-          )}
-        </div>
       )}
 
       {/* ── Live Boss Teaser ──────────────────────────────────────────────────── */}

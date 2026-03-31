@@ -6,7 +6,11 @@ import { promises as fs } from 'fs';
 import { dirname, join } from 'path';
 import { supabaseAdmin } from '../lib/supabase';
 import { JWT_CONFIG } from '../lib/jwtConfig';
+import { getAuthCookieOptions, getClearAuthCookieOptions } from '../lib/authCookie';
 import type { LoginRequest, RegisterRequest } from '../types';
+
+const COOKIE_WEEK_MS = 7 * 24 * 60 * 60 * 1000;
+const COOKIE_MONTH_MS = 30 * 24 * 60 * 60 * 1000;
 
 const PASSWORD_STORE_PATH = join(__dirname, '..', 'data', 'password-store.json');
 
@@ -98,12 +102,7 @@ export async function login(req: Request, res: Response) {
     // Generate JWT token
     const token = jwt.sign({ userId: user.id, isGuest: false }, JWT_CONFIG.secret, { expiresIn: JWT_CONFIG.expiresIn });
 
-    res.cookie('token', token, {
-      httpOnly: true,
-      secure: process.env.NODE_ENV === 'production',
-      sameSite: 'lax',
-      maxAge: 7 * 24 * 60 * 60 * 1000,
-    });
+    res.cookie('token', token, getAuthCookieOptions(COOKIE_WEEK_MS));
 
     return res.json({ userId: user.id, name: user.name, username: user.username });
   } catch (err) {
@@ -142,12 +141,7 @@ export async function register(req: Request, res: Response) {
       await persistPasswordStore();
 
       const token = jwt.sign({ userId: existingUser.id, isGuest: false }, JWT_CONFIG.secret, { expiresIn: JWT_CONFIG.expiresIn });
-      res.cookie('token', token, {
-        httpOnly: true,
-        secure: process.env.NODE_ENV === 'production',
-        sameSite: 'lax',
-        maxAge: 7 * 24 * 60 * 60 * 1000,
-      });
+      res.cookie('token', token, getAuthCookieOptions(COOKIE_WEEK_MS));
 
       return res.json({ userId: existingUser.id, name: existingUser.name, username: existingUser.username });
     }
@@ -187,12 +181,7 @@ export async function register(req: Request, res: Response) {
     // Generate JWT token
     const token = jwt.sign({ userId: newUser.id, isGuest: false }, JWT_CONFIG.secret, { expiresIn: JWT_CONFIG.expiresIn });
 
-    res.cookie('token', token, {
-      httpOnly: true,
-      secure: process.env.NODE_ENV === 'production',
-      sameSite: 'lax',
-      maxAge: 7 * 24 * 60 * 60 * 1000,
-    });
+    res.cookie('token', token, getAuthCookieOptions(COOKIE_WEEK_MS));
 
     return res.json({ userId: newUser.id, name: newUser.name, username: newUser.username });
   } catch (err) {
@@ -237,12 +226,7 @@ export async function createGuestSession(req: Request, res: Response) {
         if (existingProfile) {
           // Session token unchanged — reuse it
           const token = issueGuestToken(existingProfile.id, sessionToken)
-          res.cookie('token', token, {
-            httpOnly: true,
-            secure: process.env.NODE_ENV === 'production',
-            sameSite: 'lax',
-            maxAge: 30 * 24 * 60 * 60 * 1000,
-          })
+          res.cookie('token', token, getAuthCookieOptions(COOKIE_MONTH_MS))
 
           // Update last active timestamp
           await supabaseAdmin
@@ -307,12 +291,7 @@ export async function createGuestSession(req: Request, res: Response) {
 
     // Issue JWT
     const token = issueGuestToken(newProfile.id, newSessionToken)
-    res.cookie('token', token, {
-      httpOnly: true,
-      secure: process.env.NODE_ENV === 'production',
-      sameSite: 'lax',
-      maxAge: 30 * 24 * 60 * 60 * 1000,
-    })
+    res.cookie('token', token, getAuthCookieOptions(COOKIE_MONTH_MS))
 
     return res.json({
       userId: newProfile.id,
@@ -397,12 +376,7 @@ export async function convertGuestToRegistered(req: Request, res: Response) {
 
     // Issue a new non-guest JWT
     const newToken = jwt.sign({ userId: guestId, isGuest: false }, JWT_CONFIG.secret, { expiresIn: JWT_CONFIG.expiresIn })
-    res.cookie('token', newToken, {
-      httpOnly: true,
-      secure: process.env.NODE_ENV === 'production',
-      sameSite: 'lax',
-      maxAge: 7 * 24 * 60 * 60 * 1000,
-    })
+    res.cookie('token', newToken, getAuthCookieOptions(COOKIE_WEEK_MS))
 
     return res.json({
       userId: updatedProfile.id,
@@ -417,6 +391,6 @@ export async function convertGuestToRegistered(req: Request, res: Response) {
 }
 
 export async function logout(_req: Request, res: Response) {
-  res.clearCookie('token')
+  res.clearCookie('token', getClearAuthCookieOptions())
   return res.json({ message: 'Logged out' })
 }
