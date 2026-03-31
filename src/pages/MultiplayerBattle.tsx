@@ -10,7 +10,8 @@ import { useAuth } from '../hooks/useAuth'
 
 import type { Subject } from '../types/api'
 
-import demonQueenUrl from '../dark_fantasy_demon_queen.glb?url'
+import demonQueenUrl from '/assets/dark_fantasy_demon_queen.glb'
+import ErrorBoundary from '../components/ErrorBoundary'
 
 type Difficulty = 'Easy' | 'Medium' | 'Hard'
 
@@ -327,6 +328,11 @@ export default function MultiplayerBattle() {
       setBattleNote(payload?.message ?? 'Unable to start battle round.')
     }
 
+    const onSocketError = (payload: { message?: string }) => {
+      console.warn('[socket error]', payload?.message)
+      setBattleNote(`Connection error: ${payload?.message ?? 'Check your connection.'}`)
+    }
+
     // NOTE: event names are "contract placeholders".
     // When your backend is ready, make it emit `roomState` and `battleUpdate`.
     socket.on('connect', onConnect)
@@ -337,6 +343,7 @@ export default function MultiplayerBattle() {
     socket.on('gameFinished', onGameFinished)
     socket.on('battleStarted', onBattleStarted)
     socket.on('battleStartError', onBattleStartError)
+    socket.on('error', onSocketError)
 
     socket.emit('joinRoom', {
       roomCode,
@@ -354,6 +361,7 @@ export default function MultiplayerBattle() {
       socket.off('gameFinished', onGameFinished)
       socket.off('battleStarted', onBattleStarted)
       socket.off('battleStartError', onBattleStartError)
+      socket.off('error', onSocketError)
       socket.emit('leaveRoom')
     }
   }, [socket, roomCode, localPlayer, user?.userId])
@@ -379,6 +387,7 @@ export default function MultiplayerBattle() {
 
   const battleRef = useRef<BossChallengeRef>(null)
 
+  const ARENA_HEIGHT = 'clamp(340px, 58vw, 560px)'
   const { myClassId, extraPlayers, bossType, difficulty } = useMemo(() => {
     const myClassId = localPlayer?.classId ?? 'knight'
     const players = roomState?.players ?? []
@@ -673,19 +682,42 @@ export default function MultiplayerBattle() {
         </div>
       )}
 
-      <BossChallenge
-        ref={battleRef}
-        classId={myClassId}
-        bossType={bossType}
-        difficulty={difficulty}
-        bossUrl={demonQueenUrl}
-        bossUiOverride={{ name: '👑 Dark Demon Queen', color: '#ff3b6a', glowColor: '#7f1d1d' }}
-        extraPlayers={extraPlayers}
-        bossScaleOverride={1.2}
-        bossPosOverride={[2.2, 0.15, 0]}
-        externalBossHp={bossHp}
-        externalCharHp={yourCharHp}
-      />
+      <ErrorBoundary fallback={
+        <div style={{
+          height: ARENA_HEIGHT,
+          background: 'linear-gradient(160deg, #0f172a, #1e293b)',
+          borderRadius: 12,
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          flexDirection: 'column',
+          gap: 12,
+          border: '1px solid rgba(255,255,255,0.08)',
+        }}>
+          <div style={{ fontSize: 48 }}>👑</div>
+          <div style={{ fontFamily: 'monospace', color: '#94a3b8', fontWeight: 800 }}>
+            3D Arena unavailable
+          </div>
+          <div style={{ fontFamily: 'monospace', color: '#475569', fontSize: 13 }}>
+            The battle will continue without the 3D view.
+          </div>
+        </div>
+      }>
+        <BossChallenge
+          ref={battleRef}
+          classId={myClassId}
+          bossType={bossType}
+          difficulty={difficulty}
+          bossUrl={demonQueenUrl}
+          bossUiOverride={{ name: '👑 Dark Demon Queen', color: '#ff3b6a', glowColor: '#7f1d1d' }}
+          extraPlayers={extraPlayers}
+          bossScaleOverride={1.2}
+          bossPosOverride={[2.2, 0.15, 0]}
+          externalBossHp={bossHp}
+          externalCharHp={yourCharHp}
+          arenaHeight={ARENA_HEIGHT}
+        />
+      </ErrorBoundary>
 
       <div
         className="rounded-2xl p-4"

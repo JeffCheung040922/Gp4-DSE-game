@@ -55,14 +55,21 @@ export function getSavedUser(): AuthUser | null {
 }
 
 export function useAuth() {
-  const [user, setUserState] = useState<AuthUser | null>(() => loadAuth())
-  const [isInitializing, setIsInitializing] = useState(false)
+  const [user, setUserState] = useState<AuthUser | null>(() => {
+    // Attempt synchronous load from localStorage during SSR-safe initialization.
+    // If nothing is stored, return null immediately (no async init needed yet).
+    return loadAuth();
+  });
+  const [isInitializing, setIsInitializing] = useState(false);
+  // Tracks whether the hook has finished its initial synchronous load.
+  // This prevents child components from rendering before auth state is stable.
+  const [isReady, setIsReady] = useState(() => loadAuth() !== null);
 
   useEffect(() => {
-    const syncAuthState = () => setUserState(loadAuth())
-    window.addEventListener(AUTH_CHANGED_EVENT, syncAuthState)
-    return () => window.removeEventListener(AUTH_CHANGED_EVENT, syncAuthState)
-  }, [])
+    const syncAuthState = () => setUserState(loadAuth());
+    window.addEventListener(AUTH_CHANGED_EVENT, syncAuthState);
+    return () => window.removeEventListener(AUTH_CHANGED_EVENT, syncAuthState);
+  }, []);
 
   /**
    * Try to restore a guest session from localStorage (called on app boot).
@@ -70,69 +77,72 @@ export function useAuth() {
    */
   const initGuestSession = useMemo(
     () => async () => {
-      if (user !== null) return // already have a user
+      if (user !== null) return; // already have a user
 
-      setIsInitializing(true)
+      setIsInitializing(true);
       try {
-        const storedToken = getStoredSessionToken()
-        const resp = await createGuestSession(storedToken ?? undefined)
+        const storedToken = getStoredSessionToken();
+        const resp = await createGuestSession(storedToken ?? undefined);
 
-        storeSessionToken(resp.sessionToken)
+        storeSessionToken(resp.sessionToken);
 
         const guestUser: AuthUser = {
           userId: resp.userId,
           name: resp.name,
           isGuest: true,
           sessionToken: resp.sessionToken,
-        }
-        localStorage.setItem(AUTH_STORAGE_KEY, JSON.stringify(guestUser))
-        setUserState(guestUser)
-        window.dispatchEvent(new Event(AUTH_CHANGED_EVENT))
+        };
+        localStorage.setItem(AUTH_STORAGE_KEY, JSON.stringify(guestUser));
+        setUserState(guestUser);
+        setIsReady(true);
+        window.dispatchEvent(new Event(AUTH_CHANGED_EVENT));
       } catch (err) {
-        console.error('Failed to init guest session:', err)
+        console.error('Failed to init guest session:', err);
       } finally {
-        setIsInitializing(false)
+        setIsInitializing(false);
       }
     },
     [user]
-  )
+  );
 
   const setUser = (next: AuthUser) => {
     if (next.isGuest) {
-      localStorage.setItem(AUTH_STORAGE_KEY, JSON.stringify(next))
-      sessionStorage.removeItem(AUTH_STORAGE_KEY)
+      localStorage.setItem(AUTH_STORAGE_KEY, JSON.stringify(next));
+      sessionStorage.removeItem(AUTH_STORAGE_KEY);
       if (next.sessionToken) {
-        storeSessionToken(next.sessionToken)
+        storeSessionToken(next.sessionToken);
       }
     } else {
-      localStorage.setItem(AUTH_STORAGE_KEY, JSON.stringify(next))
-      sessionStorage.removeItem(AUTH_STORAGE_KEY)
-      localStorage.removeItem('dse_guest_session_token')
+      localStorage.setItem(AUTH_STORAGE_KEY, JSON.stringify(next));
+      sessionStorage.removeItem(AUTH_STORAGE_KEY);
+      localStorage.removeItem('dse_guest_session_token');
     }
-    setUserState(next)
-    window.dispatchEvent(new Event(AUTH_CHANGED_EVENT))
-  }
+    setUserState(next);
+    setIsReady(true);
+    window.dispatchEvent(new Event(AUTH_CHANGED_EVENT));
+  };
 
   const clearUser = async () => {
     if (!user?.isGuest) {
       try {
-        await logoutApi()
+        await logoutApi();
       } catch (error) {
-        console.warn('Logout failed, proceeding with local cleanup:', error)
+        console.warn('Logout failed, proceeding with local cleanup:', error);
       }
     }
-    sessionStorage.removeItem(AUTH_STORAGE_KEY)
-    localStorage.removeItem(AUTH_STORAGE_KEY)
-    localStorage.removeItem('dse_guest_session_token')
-    setUserState(null)
-    window.dispatchEvent(new Event(AUTH_CHANGED_EVENT))
-  }
+    sessionStorage.removeItem(AUTH_STORAGE_KEY);
+    localStorage.removeItem(AUTH_STORAGE_KEY);
+    localStorage.removeItem('dse_guest_session_token');
+    setUserState(null);
+    setIsReady(false);
+    window.dispatchEvent(new Event(AUTH_CHANGED_EVENT));
+  };
 
   const value = useMemo(
-    () => ({ user, setUser, clearUser, isInitializing, initGuestSession }),
-    [user, isInitializing, initGuestSession]
-  )
-  return value
+    () => ({ user, setUser, clearUser, isInitializing, initGuestSession, isReady }),
+    [user, isInitializing, initGuestSession, isReady]
+  );
+  return value;
 }
 
 export function overwriteSavedCharacterName(name: string) {

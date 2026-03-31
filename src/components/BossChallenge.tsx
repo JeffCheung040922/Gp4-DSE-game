@@ -647,6 +647,26 @@ export const BossChallenge = forwardRef<
   const [showProjectile, setShowProjectile] = useState(false)
   const [floatingTexts,  setFloatingTexts] = useState<FloatingText[]>([])
   const [showWeaponPicker, setShowWeaponPicker] = useState(false)
+  const canvasRef = useRef<HTMLDivElement>(null)
+
+  // Recover gracefully from WebGL context loss (e.g. tab switching / memory pressure).
+  useEffect(() => {
+    const canvas = canvasRef.current?.querySelector('canvas')
+    if (!canvas) return
+    const onContextLost = (e: Event) => {
+      e.preventDefault()
+      console.warn('[BossChallenge] WebGL context lost, will recover on restore.')
+    }
+    const onContextRestored = () => {
+      console.info('[BossChallenge] WebGL context restored.')
+    }
+    canvas.addEventListener('webglcontextlost', onContextLost)
+    canvas.addEventListener('webglcontextrestored', onContextRestored)
+    return () => {
+      canvas.removeEventListener('webglcontextlost', onContextLost)
+      canvas.removeEventListener('webglcontextrestored', onContextRestored)
+    }
+  }, [])
 
   useEffect(() => {
     if (typeof externalCharHp === 'number') {
@@ -854,7 +874,7 @@ export const BossChallenge = forwardRef<
   return (
     <div style={{ width: '100%', borderRadius: 12, overflow: 'hidden', border: '1px solid rgba(255,255,255,0.08)' }}>
       {/* ── 3D Battle canvas ── */}
-      <div style={{ position: 'relative', width: '100%', height: arenaHeight }}>
+      <div ref={canvasRef} style={{ position: 'relative', width: '100%', height: arenaHeight }}>
         <FloatingTexts texts={floatingTexts} />
 
         {/* HP bars */}
