@@ -10,7 +10,7 @@ import { useAuth } from '../hooks/useAuth'
 
 import type { Subject } from '../types/api'
 
-import demonQueenUrl from '/assets/dark_fantasy_demon_queen.glb'
+import demonQueenUrl from '../dark_fantasy_demon_queen.glb?url'
 import ErrorBoundary from '../components/ErrorBoundary'
 
 type Difficulty = 'Easy' | 'Medium' | 'Hard'
