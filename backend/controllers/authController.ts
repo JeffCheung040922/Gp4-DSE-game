@@ -1,45 +1,11 @@
 import { Request, Response } from 'express';
-import { randomUUID } from 'crypto';
 import jwt from 'jsonwebtoken';
 import bcrypt from 'bcryptjs';
-import { promises as fs } from 'fs';
-import { dirname, join } from 'path';
+import { randomUUID } from 'crypto';
 import { supabaseAdmin } from '../lib/supabase';
 import { JWT_CONFIG } from '../lib/jwtConfig';
 import { getAuthCookieOptions, getClearAuthCookieOptions } from '../lib/authCookie';
 import type { LoginRequest, RegisterRequest } from '../types';
-
-const COOKIE_WEEK_MS = 7 * 24 * 60 * 60 * 1000;
-const COOKIE_MONTH_MS = 30 * 24 * 60 * 60 * 1000;
-
-const PASSWORD_STORE_PATH = join(__dirname, '..', 'data', 'password-store.json');
-
-// Simple in-memory password store for testing (in production, use proper auth)
-const passwordStore = new Map<string, string>();
-let passwordStoreLoaded = false;
-
-async function loadPasswordStore() {
-  if (passwordStoreLoaded) return;
-  try {
-    const raw = await fs.readFile(PASSWORD_STORE_PATH, 'utf8');
-    const parsed = JSON.parse(raw) as Record<string, string>;
-    Object.entries(parsed).forEach(([userId, hash]) => {
-      if (typeof hash === 'string' && hash.length > 0) {
-        passwordStore.set(userId, hash);
-      }
-    });
-  } catch {
-    // First run or missing file is expected.
-  } finally {
-    passwordStoreLoaded = true;
-  }
-}
-
-async function persistPasswordStore() {
-  await fs.mkdir(join(__dirname, '..', 'data'), { recursive: true });
-  const serialized = JSON.stringify(Object.fromEntries(passwordStore), null, 2);
-  await fs.writeFile(PASSWORD_STORE_PATH, serialized, 'utf8');
-}
 
 // ─── Guest Session helpers ────────────────────────────────────────────────────
 
@@ -61,26 +27,17 @@ function issueGuestToken(guestId: string, sessionToken: string): string {
 
 // ─── Auth endpoints ────────────────────────────────────────────────────────────
 
-// authController: handles login/register/logout/guest endpoints
-// IMPLEMENTED: Uses Supabase profiles table for persistence
-// Login: Query profiles by username → verify bcrypt password → generate JWT
-// Register: Generate UUID → hash password with bcrypt → insert into profiles table
-// Guest: Create guest profile → issue guest JWT → return session token for recovery
 export async function login(req: Request, res: Response) {
   const { username, password } = req.body as LoginRequest;
 
   try {
-    await loadPasswordStore();
-
-    // Validate input
     if (!username || !password) {
       return res.status(400).json({ error: 'Username and password required' });
     }
 
-    // Query profiles table for user
     const { data: user, error } = await supabaseAdmin
       .from('profiles')
-      .select('id, username, name')
+      .select('id, username, name, password_hash')
       .eq('username', username)
       .single();
 
@@ -88,21 +45,17 @@ export async function login(req: Request, res: Response) {
       return res.status(401).json({ error: 'Invalid credentials' });
     }
 
-    // Check password from in-memory store
-    const storedHashedPassword = passwordStore.get(user.id);
-    if (!storedHashedPassword) {
-      return res.status(401).json({ error: 'Account password not initialized. Please register with the same username once to set it.' });
+    if (!user.password_hash) {
+      return res.status(401).json({ error: 'Invalid credentials' });
     }
 
-    const passwordMatch = await bcrypt.compare(password, storedHashedPassword);
+    const passwordMatch = await bcrypt.compare(password, user.password_hash);
     if (!passwordMatch) {
       return res.status(401).json({ error: 'Invalid credentials' });
     }
 
-    // Generate JWT token
     const token = jwt.sign({ userId: user.id, isGuest: false }, JWT_CONFIG.secret, { expiresIn: JWT_CONFIG.expiresIn });
-
-    res.cookie('token', token, getAuthCookieOptions(COOKIE_WEEK_MS));
+    res.cookie('token', token, getAuthCookieOptions(7 * 24 * 60 * 60 * 1000));
 
     return res.json({ userId: user.id, name: user.name, username: user.username });
   } catch (err) {
@@ -115,51 +68,20 @@ export async function register(req: Request, res: Response) {
   const { username, password, name } = req.body as RegisterRequest;
 
   try {
-    await loadPasswordStore();
-
-    // Validate input
     if (!username || !password || !name) {
       return res.status(400).json({ error: 'Username, password, and name required' });
     }
 
-    // Check if username already exists
-    const { data: existingUser } = await supabaseAdmin
-      .from('profiles')
-      .select('id, username, name')
-      .eq('username', username)
-      .single();
-
-    if (existingUser) {
-      const existingPasswordHash = passwordStore.get(existingUser.id);
-      if (existingPasswordHash) {
-        return res.status(409).json({ error: 'Username already exists' });
-      }
-
-      // User profile exists (maybe from guest-to-registered migration) — set password
-      const seededHash = await bcrypt.hash(password, 10);
-      passwordStore.set(existingUser.id, seededHash);
-      await persistPasswordStore();
-
-      const token = jwt.sign({ userId: existingUser.id, isGuest: false }, JWT_CONFIG.secret, { expiresIn: JWT_CONFIG.expiresIn });
-      res.cookie('token', token, getAuthCookieOptions(COOKIE_WEEK_MS));
-
-      return res.json({ userId: existingUser.id, name: existingUser.name, username: existingUser.username });
-    }
-
-    // Create new user with proper UUID
+    const hashedPassword = await bcrypt.hash(password, 10);
     const userId = randomUUID();
 
-    // Hash password and store in memory
-    const hashedPassword = await bcrypt.hash(password, 10);
-    passwordStore.set(userId, hashedPassword);
-
-    // Insert new user into profiles table
     const { data: newUser, error } = await supabaseAdmin
       .from('profiles')
       .insert({
         id: userId,
         username,
         name,
+        password_hash: hashedPassword,
         avatar: 'knight',
         level: 1,
         xp: 0,
@@ -171,10 +93,6 @@ export async function register(req: Request, res: Response) {
 
     if (error || !newUser) {
       console.error('Register profile insert error:', JSON.stringify(error, null, 2));
-      passwordStore.delete(userId);
-      await persistPasswordStore();
-
-      // Surface specific DB errors for developer clarity
       const errMsg = error?.message ?? '';
       if (errMsg.includes('duplicate key') || errMsg.includes('unique constraint')) {
         return res.status(409).json({ error: 'Username already taken — please choose a different one' });
@@ -185,12 +103,8 @@ export async function register(req: Request, res: Response) {
       return res.status(500).json({ error: `Failed to register: ${errMsg || 'Unknown database error'}` });
     }
 
-    await persistPasswordStore();
-
-    // Generate JWT token
     const token = jwt.sign({ userId: newUser.id, isGuest: false }, JWT_CONFIG.secret, { expiresIn: JWT_CONFIG.expiresIn });
-
-    res.cookie('token', token, getAuthCookieOptions(COOKIE_WEEK_MS));
+    res.cookie('token', token, getAuthCookieOptions(7 * 24 * 60 * 60 * 1000));
 
     return res.json({ userId: newUser.id, name: newUser.name, username: newUser.username });
   } catch (err) {
@@ -199,12 +113,6 @@ export async function register(req: Request, res: Response) {
   }
 }
 
-/**
- * POST /api/auth/guest
- * Creates a guest session. If sessionToken is provided, attempts to recover
- * an existing guest account so progress is preserved across browser sessions.
- * Returns: { userId, name, sessionToken, isGuest: true }
- */
 export async function createGuestSession(req: Request, res: Response) {
   const { sessionToken, deviceFingerprint } = req.body as {
     sessionToken?: string
@@ -215,7 +123,6 @@ export async function createGuestSession(req: Request, res: Response) {
     const guestId = randomUUID()
     const newSessionToken = randomUUID()
 
-    // ── Attempt to recover existing guest session ────────────────────────────
     if (sessionToken) {
       const { data: existingSession } = await supabaseAdmin
         .from('guest_sessions')
@@ -224,7 +131,6 @@ export async function createGuestSession(req: Request, res: Response) {
         .single()
 
       if (existingSession) {
-        // Recover existing guest profile
         const { data: existingProfile } = await supabaseAdmin
           .from('profiles')
           .select('id, name')
@@ -233,11 +139,9 @@ export async function createGuestSession(req: Request, res: Response) {
           .single()
 
         if (existingProfile) {
-          // Session token unchanged — reuse it
           const token = issueGuestToken(existingProfile.id, sessionToken)
-          res.cookie('token', token, getAuthCookieOptions(COOKIE_MONTH_MS))
+          res.cookie('token', token, getAuthCookieOptions(30 * 24 * 60 * 60 * 1000))
 
-          // Update last active timestamp
           await supabaseAdmin
             .from('guest_sessions')
             .update({ last_active_at: new Date().toISOString() })
@@ -253,11 +157,9 @@ export async function createGuestSession(req: Request, res: Response) {
       }
     }
 
-    // ── Create new guest account ─────────────────────────────────────────────
     const guestName = generateGuestName()
-
-    // Insert guest profile
     const guestUsername = `guest_${guestId.replace(/-/g, '').slice(0, 12)}`
+
     const { data: newProfile, error: profileError } = await supabaseAdmin
       .from('profiles')
       .insert({
@@ -278,7 +180,6 @@ export async function createGuestSession(req: Request, res: Response) {
       return res.status(500).json({ error: 'Failed to create guest account' })
     }
 
-    // Insert guest session record
     await supabaseAdmin
       .from('guest_sessions')
       .insert({
@@ -287,7 +188,6 @@ export async function createGuestSession(req: Request, res: Response) {
         device_fingerprint: deviceFingerprint ?? null,
       })
 
-    // Also give them the starter sword in inventory
     await supabaseAdmin
       .from('inventory')
       .insert({
@@ -298,9 +198,8 @@ export async function createGuestSession(req: Request, res: Response) {
         quantity: 1,
       })
 
-    // Issue JWT
     const token = issueGuestToken(newProfile.id, newSessionToken)
-    res.cookie('token', token, getAuthCookieOptions(COOKIE_MONTH_MS))
+    res.cookie('token', token, getAuthCookieOptions(30 * 24 * 60 * 60 * 1000))
 
     return res.json({
       userId: newProfile.id,
@@ -314,16 +213,10 @@ export async function createGuestSession(req: Request, res: Response) {
   }
 }
 
-/**
- * POST /api/auth/convert-guest
- * Converts a guest account to a registered account.
- * Preserves all game progress (XP, gold, inventory, history).
- */
 export async function convertGuestToRegistered(req: Request, res: Response) {
   const { username, password, name } = req.body as RegisterRequest & { sessionToken?: string }
 
   try {
-    // Decode the current guest JWT to get the guest userId
     const guestToken = req.cookies?.token
     if (!guestToken) {
       return res.status(401).json({ error: 'No guest session found' })
@@ -342,12 +235,10 @@ export async function convertGuestToRegistered(req: Request, res: Response) {
 
     const guestId = decoded.userId
 
-    // Validate input
     if (!username || !password || !name) {
       return res.status(400).json({ error: 'Username, password, and name required' })
     }
 
-    // Check if username is taken
     const { data: existingUser } = await supabaseAdmin
       .from('profiles')
       .select('id')
@@ -358,17 +249,14 @@ export async function convertGuestToRegistered(req: Request, res: Response) {
       return res.status(409).json({ error: 'Username already taken' })
     }
 
-    // Hash password
-    await loadPasswordStore()
     const hashedPassword = await bcrypt.hash(password, 10)
-    passwordStore.set(guestId, hashedPassword)
 
-    // Update guest profile to registered
     const { data: updatedProfile, error: updateError } = await supabaseAdmin
       .from('profiles')
       .update({
         username,
         name,
+        password_hash: hashedPassword,
         is_guest: false,
       })
       .eq('id', guestId)
@@ -377,15 +265,11 @@ export async function convertGuestToRegistered(req: Request, res: Response) {
 
     if (updateError || !updatedProfile) {
       console.error('Convert guest error:', updateError)
-      passwordStore.delete(guestId)
       return res.status(500).json({ error: 'Failed to convert guest account' })
     }
 
-    await persistPasswordStore()
-
-    // Issue a new non-guest JWT
     const newToken = jwt.sign({ userId: guestId, isGuest: false }, JWT_CONFIG.secret, { expiresIn: JWT_CONFIG.expiresIn })
-    res.cookie('token', newToken, getAuthCookieOptions(COOKIE_WEEK_MS))
+    res.cookie('token', newToken, getAuthCookieOptions(7 * 24 * 60 * 60 * 1000))
 
     return res.json({
       userId: updatedProfile.id,

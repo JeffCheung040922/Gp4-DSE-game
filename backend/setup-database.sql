@@ -23,6 +23,7 @@ CREATE TABLE IF NOT EXISTS public.profiles (
     xp INTEGER DEFAULT 0,
     gold INTEGER DEFAULT 100,
     is_guest BOOLEAN DEFAULT false,
+    password_hash TEXT,
     created_at TIMESTAMPTZ DEFAULT NOW(),
     updated_at TIMESTAMPTZ DEFAULT NOW()
 );
