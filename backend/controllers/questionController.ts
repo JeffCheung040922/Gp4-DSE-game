@@ -95,33 +95,109 @@ export async function getQuestions(req: AuthRequest, res: Response) {
   }
 }
 
+/**
+ * GET /api/random-questions?subject=listening&difficulty=Easy&count=12
+ * Returns `count` (default 12) random questions from the DB for the given
+ * subject + difficulty. No set concept — just a pool of questions.
+ */
+export async function getRandomQuestions(req: AuthRequest, res: Response) {
+  const subject = req.query.subject as string | undefined;
+  const difficulty = req.query.difficulty as string | undefined;
+  const count = Math.min(parseInt(String(req.query.count ?? '12'), 10), 50);
+
+  try {
+    let query = supabaseAdmin
+      .from('questions')
+      .select('id, question_no, question_text, option_a, option_b, option_c, option_d, correct_answer, subject:question_sets(subject, difficulty)');
+
+    if (subject) {
+      query = query.ilike('question_sets.subject', `%${subject}%`);
+    }
+    if (difficulty) {
+      query = query.ilike('question_sets.difficulty', `%${difficulty}%`);
+    }
+
+    const { data: all, error } = await query;
+
+    if (error) {
+      console.error('getRandomQuestions error:', error);
+      return res.status(500).json({ error: 'Failed to fetch questions' });
+    }
+
+    if (!all || all.length === 0) {
+      return res.json([]);
+    }
+
+    // Fisher-Yates shuffle and take `count`
+    const shuffled = [...all];
+    for (let i = shuffled.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+    }
+
+    const picked = shuffled.slice(0, count);
+    const questions = picked.map((q, idx) => ({
+      id: q.id,
+      no: idx + 1,
+      text: q.question_text,
+      options: [q.option_a, q.option_b, q.option_c, q.option_d],
+    }));
+
+    return res.json(questions);
+  } catch (err) {
+    console.error('getRandomQuestions error:', err);
+    return res.status(500).json({ error: 'Failed to fetch questions' });
+  }
+}
+
 export async function submitAnswers(req: AuthRequest, res: Response) {
   const userId = req.userId!;
   const { setId, subject, answers } = req.body as SubmitRequest;
 
   try {
-    if (!setId || !subject || !answers) {
-      return res.status(400).json({ error: 'setId, subject, and answers required' });
+    if (!subject || !answers) {
+      return res.status(400).json({ error: 'subject and answers required' });
     }
 
-    const { data: questions, error: questionsError } = await supabaseAdmin
-      .from('questions')
-      .select('id, question_no, correct_answer')
-      .eq('set_id', setId)
-      .order('question_no');
+    let questions: { id: string; question_no: number; correct_answer: string }[] = [];
+    let difficulty = 'Easy';
 
-    if (questionsError || !questions) {
-      console.error('Get correct answers error:', questionsError);
-      return res.status(500).json({ error: 'Failed to process answers' });
+    if (setId) {
+      // Real set — load questions and save history
+      const { data: qs, error: qsErr } = await supabaseAdmin
+        .from('questions')
+        .select('id, question_no, correct_answer')
+        .eq('set_id', setId)
+        .order('question_no');
+
+      if (qsErr || !qs) {
+        console.error('Get correct answers error:', qsErr);
+        return res.status(500).json({ error: 'Failed to process answers' });
+      }
+      questions = qs;
+
+      const { data: questionSet } = await supabaseAdmin
+        .from('question_sets')
+        .select('xp_reward, gold_reward, difficulty')
+        .eq('id', setId)
+        .single();
+
+      difficulty = questionSet?.difficulty || 'Easy';
+    } else {
+      // Random questions flow — extract IDs from answers and look up correct answers
+      const answeredIds = Object.keys(answers);
+      const { data: qs, error: qsErr } = await supabaseAdmin
+        .from('questions')
+        .select('id, question_no, correct_answer')
+        .in('id', answeredIds);
+
+      if (qsErr || !qs) {
+        console.error('Get correct answers error:', qsErr);
+        return res.status(500).json({ error: 'Failed to process answers' });
+      }
+      questions = qs;
     }
 
-    const { data: questionSet } = await supabaseAdmin
-      .from('question_sets')
-      .select('xp_reward, gold_reward, difficulty')
-      .eq('id', setId)
-      .single();
-
-    const difficulty = questionSet?.difficulty || 'Easy';
     const battleValues = getBattleValues(difficulty);
 
     const answeredQuestionIds = new Set(Object.keys(answers));
@@ -151,10 +227,12 @@ export async function submitAnswers(req: AuthRequest, res: Response) {
     const xpEarned = Math.round((correctCount / totalQuestions) * 100);
     const goldEarned = Math.round((correctCount / totalQuestions) * 50);
 
-    const actualXp = questionSet?.xp_reward || xpEarned;
-    const actualGold = questionSet?.gold_reward || goldEarned;
+    const xpPerQuestion = Math.round(xpEarned / Math.max(totalQuestions, 1));
+    const goldPerQuestion = Math.round(goldEarned / Math.max(totalQuestions, 1));
+    const actualXp = Math.round(correctCount * xpPerQuestion);
+    const actualGold = Math.round(correctCount * goldPerQuestion);
 
-    if (isSetComplete) {
+    if (setId && isSetComplete) {
       const { error: historyError } = await supabaseAdmin
         .from('game_history')
         .insert({
@@ -197,27 +275,28 @@ export async function submitAnswers(req: AuthRequest, res: Response) {
           },
           { onConflict: 'user_id,subject,difficulty' }
         );
-
-      const { data: profile } = await supabaseAdmin
-        .from('profiles')
-        .select('xp, gold')
-        .eq('id', userId)
-        .single();
-
-      await supabaseAdmin
-        .from('profiles')
-        .update({
-          xp: (profile?.xp || 0) + actualXp,
-          gold: (profile?.gold || 0) + actualGold,
-        })
-        .eq('id', userId);
     }
+
+    // Always update XP/Gold for the user (even for random-questions flow)
+    const { data: profile } = await supabaseAdmin
+      .from('profiles')
+      .select('xp, gold')
+      .eq('id', userId)
+      .single();
+
+    await supabaseAdmin
+      .from('profiles')
+      .update({
+        xp: (profile?.xp || 0) + actualXp,
+        gold: (profile?.gold || 0) + actualGold,
+      })
+      .eq('id', userId);
 
     return res.json({
       score,
       total: totalQuestions,
-      xpEarned: isSetComplete ? actualXp : 0,
-      goldEarned: isSetComplete ? actualGold : 0,
+      xpEarned: actualXp,
+      goldEarned: actualGold,
       results,
     });
   } catch (err) {

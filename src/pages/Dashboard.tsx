@@ -1,10 +1,13 @@
 import { useEffect, useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import {
   BookOpen, Mic, Headphones, PenTool,
-  Flame, Trophy, ChevronRight,
-  Skull, Users,
+  Flame, Trophy, ChevronRight, Star,
+  Swords, Zap, Users, RotateCcw, Calendar,
+  Skull, UserPlus,
 } from 'lucide-react'
+import { CHARACTER_CLASSES } from '../types/character'
+import { getSavedCharacter } from '../hooks/useCharacter'
 import { useAuth, isGuestUser } from '../hooks/useAuth'
 import { fetchWeeklyStreak, fetchWrongQuestionsReview, fetchDashboardStats } from '../api/dashboard'
 import { fetchLiveBossTeaser } from '../api/teaser'
@@ -52,8 +55,11 @@ const SUBJECT_COLOR: Record<Subject, string> = {
 
 // ─── Dashboard ────────────────────────────────────────────────────────────────
 export default function Dashboard() {
+  const navigate = useNavigate()
   const { user } = useAuth()
   const isGuest = isGuestUser(user)
+  const savedChar = getSavedCharacter()
+  const charClass = savedChar ? CHARACTER_CLASSES.find(c => c.id === savedChar.classId) : null
   const [weeklyStreak, setWeeklyStreak] = useState<WeeklyStreak | null>(null)
   const [wrongReview, setWrongReview] = useState<WrongQuestionsReview | null>(null)
   const [stats, setStats] = useState<DashboardStats | null>(null)

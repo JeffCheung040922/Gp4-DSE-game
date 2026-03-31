@@ -46,6 +46,20 @@ export async function fetchQuestions(setId: string): Promise<Question[]> {
 }
 
 /**
+ * Fetch N random questions from the DB pool for a given subject + difficulty.
+ * GET /api/random-questions?subject=listening&difficulty=Easy&count=12
+ * No set concept — just a random quiz.
+ */
+export async function fetchRandomQuestions(
+  subject: Subject,
+  difficulty: 'Easy' | 'Medium' | 'Hard',
+  count = 12
+): Promise<Question[]> {
+  const { data } = await api.get('/random-questions', { params: { subject, difficulty, count } })
+  return assertArray<Question>(data, 'random-questions')
+}
+
+/**
  * Submit the user's answers and receive scored results.
  * POST /api/submit
  */

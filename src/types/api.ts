@@ -47,7 +47,7 @@ export interface Question {
 // ─── Submit ───────────────────────────────────────────────────────────────────
 // POST /api/submit
 export interface SubmitPayload {
-  setId: string
+  setId?: string
   subject: Subject
   answers: Record<string, string>       // { questionId: 'A' | 'B' | 'C' | 'D' }
 }
