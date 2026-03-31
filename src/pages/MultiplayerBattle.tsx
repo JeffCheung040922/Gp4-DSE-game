@@ -10,7 +10,7 @@ import { useAuth } from '../hooks/useAuth'
 
 import type { Subject } from '../types/api'
 
-import demonQueenUrl from '/assets/bosses/Skeleton_Mage.glb'
+const DEMON_QUEEN_URL = '/assets/bosses/Skeleton_Mage.glb'
 import ErrorBoundary from '../components/ErrorBoundary'
 
 type Difficulty = 'Easy' | 'Medium' | 'Hard'
@@ -708,7 +708,7 @@ export default function MultiplayerBattle() {
           classId={myClassId}
           bossType={bossType}
           difficulty={difficulty}
-          bossUrl={demonQueenUrl}
+          bossUrl={DEMON_QUEEN_URL}
           bossUiOverride={{ name: '👑 Dark Demon Queen', color: '#ff3b6a', glowColor: '#7f1d1d' }}
           extraPlayers={extraPlayers}
           bossScaleOverride={1.2}
