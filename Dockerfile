@@ -19,7 +19,7 @@ COPY types ./types
 COPY routes ./routes
 COPY controllers ./controllers
 COPY middleware ./middleware
-COPY services ./services
+COPY lib ./lib
 RUN npx tsc
 EXPOSE 3000
 CMD ["node", "dist/server.js"]
