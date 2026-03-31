@@ -1,7 +1,8 @@
 import { useState } from 'react'
 import { NavLink, useLocation } from 'react-router-dom'
-import { BookOpen, Mic, Headphones, PenTool, Menu, X, Zap, Users, ShoppingBag, Sparkles } from 'lucide-react'
+import { BookOpen, Mic, Headphones, PenTool, Menu, X, Zap, Users, ShoppingBag, Sparkles, LogIn } from 'lucide-react'
 import { useInventory } from '../hooks/useInventory'
+import { useAuth } from '../hooks/useAuth'
 
 const navItems = [
   { path: '/listening', label: 'Listening', labelCn: '聆聽', icon: Headphones, color: '#2957c8' },
@@ -16,6 +17,8 @@ export default function Navbar() {
   const [mobileOpen, setMobileOpen] = useState(false)
   const location = useLocation()
   const { inventory } = useInventory()
+  const { user } = useAuth()
+  const showAccountLogin = user?.isGuest
 
   return (
     <header className="sticky top-0 z-50 px-3 pt-3 sm:px-5 sm:pt-4">
@@ -103,6 +106,20 @@ export default function Navbar() {
             </div>
 
             <div className="hidden md:flex items-center gap-3">
+              {showAccountLogin && (
+                <NavLink
+                  to="/login"
+                  className="flex items-center gap-1.5 px-3 py-2 rounded-full text-xs sm:text-sm font-bold no-underline"
+                  style={{
+                    background: 'rgba(79, 70, 229, 0.10)',
+                    color: '#4338ca',
+                    border: '1px solid rgba(79, 70, 229, 0.22)',
+                  }}
+                >
+                  <LogIn size={14} />
+                  帳號登入
+                </NavLink>
+              )}
               <div
                 className="px-3 py-2 rounded-full text-xs sm:text-sm font-semibold"
                 style={{
@@ -148,21 +165,38 @@ export default function Navbar() {
                 boxShadow: 'inset 0 1px 0 rgba(255,255,255,0.55)',
               }}
             >
-              <div className="flex items-center justify-between px-2 py-1">
+              <div className="flex items-center justify-between px-2 py-1 gap-2 flex-wrap">
                 <div className="text-sm font-semibold" style={{ color: '#8b735d' }}>Navigation</div>
-                <NavLink
-                  to="/shop"
-                  onClick={() => setMobileOpen(false)}
-                  className="flex items-center gap-2 px-3 py-1.5 rounded-full text-sm font-bold no-underline"
-                  style={{
-                    background: 'linear-gradient(180deg, rgba(255,245,214,0.95), rgba(249,228,170,0.9))',
-                    color: '#8f5712',
-                    border: '1px solid rgba(201, 122, 26, 0.28)',
-                  }}
-                >
-                  <span>💰</span>
-                  <span className="font-mono-ui">{inventory.gold}g</span>
-                </NavLink>
+                <div className="flex items-center gap-2">
+                  {showAccountLogin && (
+                    <NavLink
+                      to="/login"
+                      onClick={() => setMobileOpen(false)}
+                      className="flex items-center gap-1 px-3 py-1.5 rounded-full text-sm font-bold no-underline"
+                      style={{
+                        background: 'rgba(79, 70, 229, 0.10)',
+                        color: '#4338ca',
+                        border: '1px solid rgba(79, 70, 229, 0.22)',
+                      }}
+                    >
+                      <LogIn size={14} />
+                      帳號登入
+                    </NavLink>
+                  )}
+                  <NavLink
+                    to="/shop"
+                    onClick={() => setMobileOpen(false)}
+                    className="flex items-center gap-2 px-3 py-1.5 rounded-full text-sm font-bold no-underline"
+                    style={{
+                      background: 'linear-gradient(180deg, rgba(255,245,214,0.95), rgba(249,228,170,0.9))',
+                      color: '#8f5712',
+                      border: '1px solid rgba(201, 122, 26, 0.28)',
+                    }}
+                  >
+                    <span>💰</span>
+                    <span className="font-mono-ui">{inventory.gold}g</span>
+                  </NavLink>
+                </div>
               </div>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
                 {navItems.map((item) => {

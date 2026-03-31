@@ -3,6 +3,51 @@ import { supabaseAdmin } from '../lib/supabase';
 import type { AuthRequest } from '../middleware/authMiddleware';
 import type { SubmitRequest } from '../types';
 
+/** DB may store "A" / "a" / "A." or the full option text — align with user picks "A"–"D". */
+type QuestionOpts = {
+  option_a: string;
+  option_b: string;
+  option_c: string;
+  option_d: string;
+};
+
+function normalizeUserLetter(raw: unknown): string | undefined {
+  const s = String(raw ?? '').trim().toUpperCase();
+  if (s === 'A' || s === 'B' || s === 'C' || s === 'D') return s;
+  const m = String(raw ?? '').trim().match(/^([A-D])/i);
+  return m ? m[1].toUpperCase() : undefined;
+}
+
+function resolveCorrectLetter(correctRaw: string, opts: QuestionOpts): 'A' | 'B' | 'C' | 'D' {
+  const t = String(correctRaw ?? '').trim();
+  const u = t.toUpperCase();
+  if (u === 'A' || u === 'B' || u === 'C' || u === 'D') return u;
+  const prefixed = u.match(/^([A-D])[\.\)\s:：]/);
+  if (prefixed) return prefixed[1] as 'A' | 'B' | 'C' | 'D';
+
+  const letters: Array<'A' | 'B' | 'C' | 'D'> = ['A', 'B', 'C', 'D'];
+  const optionTexts = [opts.option_a, opts.option_b, opts.option_c, opts.option_d].map(x =>
+    String(x ?? '').trim()
+  );
+  const norm = t.toLowerCase();
+
+  for (let i = 0; i < 4; i++) {
+    const o = optionTexts[i];
+    if (!o) continue;
+    if (norm === o.toLowerCase()) return letters[i];
+  }
+  for (let i = 0; i < 4; i++) {
+    const o = optionTexts[i];
+    if (!o) continue;
+    const ol = o.toLowerCase();
+    if (norm.length >= 4 && (norm.includes(ol) || ol.includes(norm))) return letters[i];
+  }
+
+  const first = u.charAt(0);
+  if (first === 'A' || first === 'B' || first === 'C' || first === 'D') return first;
+  return 'A';
+}
+
 function getBattleValues(difficulty: string) {
   const normalized = String(difficulty || 'Easy').toLowerCase();
 
@@ -159,16 +204,29 @@ export async function submitAnswers(req: AuthRequest, res: Response) {
       return res.status(400).json({ error: 'subject and answers required' });
     }
 
-    let questions: { id: string; question_no: number; correct_answer: string }[] = [];
+    let questions: {
+      id: string;
+      question_no: number;
+      correct_answer: string;
+      option_a: string;
+      option_b: string;
+      option_c: string;
+      option_d: string;
+    }[] = [];
     let difficulty = 'Easy';
 
     if (setId) {
       // Real set — load questions and save history
       const { data: qs, error: qsErr } = await supabaseAdmin
         .from('questions')
-        .select('id, question_no, correct_answer')
+        .select('id, question_no, correct_answer, option_a, option_b, option_c, option_d')
         .eq('set_id', setId)
         .order('question_no');
+
+      console.log(`[submitAnswers] setId=${setId}, fetched ${qs?.length ?? 0} questions, error=`, qsErr);
+      if (qs && qs.length > 0) {
+        console.log(`[submitAnswers] sample correct_answer:`, JSON.stringify(qs[0].correct_answer));
+      }
 
       if (qsErr || !qs) {
         console.error('Get correct answers error:', qsErr);
@@ -188,8 +246,13 @@ export async function submitAnswers(req: AuthRequest, res: Response) {
       const answeredIds = Object.keys(answers);
       const { data: qs, error: qsErr } = await supabaseAdmin
         .from('questions')
-        .select('id, question_no, correct_answer')
+        .select('id, question_no, correct_answer, option_a, option_b, option_c, option_d')
         .in('id', answeredIds);
+
+      console.log(`[submitAnswers] random flow, answeredIds=`, answeredIds, ', fetched', qs?.length ?? 0, 'questions, error=', qsErr);
+      if (qs && qs.length > 0) {
+        console.log(`[submitAnswers] random sample correct_answer:`, JSON.stringify(qs[0].correct_answer));
+      }
 
       if (qsErr || !qs) {
         console.error('Get correct answers error:', qsErr);
@@ -207,13 +270,22 @@ export async function submitAnswers(req: AuthRequest, res: Response) {
     let correctCount = 0;
     const results = questions.map(q => {
       const userAnswer = answers[q.id] ?? answers[String(q.question_no - 1)] ?? answers[String(q.question_no)];
-      const isCorrect = userAnswer === q.correct_answer;
+      const opts: QuestionOpts = {
+        option_a: q.option_a,
+        option_b: q.option_b,
+        option_c: q.option_c,
+        option_d: q.option_d,
+      };
+      const correctLetter = resolveCorrectLetter(q.correct_answer, opts);
+      const userLetter = normalizeUserLetter(userAnswer);
+      const isCorrect = userLetter !== undefined && userLetter === correctLetter;
+      console.log(`[submitAnswers] qId=${q.id}, correct_answer=${JSON.stringify(q.correct_answer)}, correctLetter=${correctLetter}, userLetter=${userLetter}, isCorrect=${isCorrect}`);
       if (isCorrect) correctCount++;
       return {
         questionId: q.id,
         questionNo: q.question_no,
         userAnswer,
-        correctAnswer: q.correct_answer,
+        correctAnswer: correctLetter,
         isCorrect,
         bossDamage: isCorrect ? battleValues.bossDamage : 0,
         charDamage: isCorrect ? 0 : battleValues.charDamage,

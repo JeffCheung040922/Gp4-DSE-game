@@ -21,7 +21,8 @@ export default function Login() {
 
   const savedChar = getSavedCharacter()
 
-  if (user) {
+  // 已用帳號登入才跳過登入頁；訪客可留在此頁以登入／註冊
+  if (user && !user.isGuest) {
     return <Navigate to="/character-select" replace />
   }
 
@@ -211,14 +212,27 @@ export default function Login() {
           </button>
 
           {mode === 'login' && (
-            <button
-              onClick={handleGuest}
-              disabled={submitting}
-              className="w-full mt-3 py-3 rounded-xl text-sm font-semibold transition-all hover:bg-sky-400/10"
-              style={{ background: 'transparent', color: '#38bdf8', border: '1px solid rgba(56,189,248,0.25)' }}
-            >
-              Continue as Guest
-            </button>
+            <>
+              {user?.isGuest ? (
+                <button
+                  type="button"
+                  onClick={() => navigate('/character-select', { replace: true })}
+                  className="w-full mt-3 py-3 rounded-xl text-sm font-semibold transition-all hover:bg-sky-400/10"
+                  style={{ background: 'transparent', color: '#38bdf8', border: '1px solid rgba(56,189,248,0.25)' }}
+                >
+                  以訪客繼續遊戲
+                </button>
+              ) : (
+                <button
+                  onClick={handleGuest}
+                  disabled={submitting}
+                  className="w-full mt-3 py-3 rounded-xl text-sm font-semibold transition-all hover:bg-sky-400/10"
+                  style={{ background: 'transparent', color: '#38bdf8', border: '1px solid rgba(56,189,248,0.25)' }}
+                >
+                  Continue as Guest
+                </button>
+              )}
+            </>
           )}
 
           <div className="mt-3 text-sm" style={{ color: '#64748b' }}>

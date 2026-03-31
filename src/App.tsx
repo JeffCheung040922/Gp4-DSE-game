@@ -82,7 +82,10 @@ export default function App() {
           </RequireAuthOnly>
         }
       />
-      <Route path="/login" element={user ? <Navigate to="/character-select" replace /> : <Login />} />
+      <Route
+        path="/login"
+        element={user && !user.isGuest ? <Navigate to="/character-select" replace /> : <Login />}
+      />
 
       <Route element={<RequireAuthAndCharacter />}>
         <Route index element={<Dashboard />} />

@@ -338,7 +338,7 @@ export default function QuizPage({ subject }: { subject: Subject }) {
         setFeedback(null)
         setLocked(false)
       }
-    }, 7000)
+    }, 2500)
   }
 
   const handleReplay = () => {
