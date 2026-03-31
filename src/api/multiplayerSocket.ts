@@ -18,10 +18,11 @@ export function getMultiplayerSocket(): Socket {
   const socketUrl = resolveSocketUrl()
 
   singleton = io(socketUrl || undefined, {
-    transports: ['websocket'],
+    transports: ['polling', 'websocket'],
     withCredentials: true,
-    // Wait for explicit connect implicitly; socket.io-client starts connecting immediately by default.
     autoConnect: true,
+    reconnectionAttempts: 5,
+    reconnectionDelay: 2000,
   })
 
   return singleton
